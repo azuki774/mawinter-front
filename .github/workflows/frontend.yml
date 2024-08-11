@@ -1,0 +1,39 @@
+name: Frontend
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.5"
+          cache-dependency-path: 'package-lock.json'
+
+      - run: node --version
+
+      - name: npm install
+        run: npm install
+
+      - name: npm ci
+        run: npm ci
+
+      - name: npm run build
+        run: npm run build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
+
+      - name: npm run generate
+        run: npm run build
+
