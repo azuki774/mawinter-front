@@ -3,12 +3,10 @@ import type { Category } from "@/interfaces";
 const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
 const selector = ref<any>()
 const categoryList = ref<Category[]>()
-const asyncData = await useAsyncData(
-  `records`,
-  (): Promise<any> => {
-    const url = config.public.mawinterApi + "/categories";
-    const response = $fetch(url);
-    return response;
+const asyncData = await useFetch(
+  "/api/getCategories",
+  {
+    key: `/api/getCategories`,
   }
 );
 
