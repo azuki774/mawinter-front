@@ -2,6 +2,7 @@
   <h1>mawinter-front</h1>
   <section>
     <h2>登録</h2>
+    <PostRecord />
   </section>
 
   <section>
