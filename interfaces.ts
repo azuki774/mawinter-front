@@ -8,3 +8,8 @@ export interface Record {
     price: number;
     memo: string;
 }
+
+export interface Category {
+    category_id: number;
+    category_name: string;
+}
