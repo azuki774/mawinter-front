@@ -1,7 +1,18 @@
 export default defineEventHandler ( async (event) => {
-    const config = useRuntimeConfig()
-    const query = getQuery(event)
-    const url = "http://172.19.250.172:8080/v2/records" // TODO
-    const result = await $fetch(url)
-    return result
+  const config = useRuntimeConfig()
+  const query = getQuery(event)
+  // create body
+  const reqbody = {
+    'category_id': query.category_id,
+    'price': query.price,
+    'from': "mawinter-fe"
+  }
+  const url = config.public.mawinterApi + "/v2/record"
+  const result = await $fetch(url,
+    {
+        method: "POST",
+        body: reqbody
+    }
+  )
+  return result
 })
