@@ -2,22 +2,23 @@
 import type { Record } from "@/interfaces";
 const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
 const recordList = ref<Record[]>()
-const asyncData = await useAsyncData(
-  `records`,
-  (): Promise<any> => {
-    const url = config.public.mawinterApi + "/v2/records";
-    console.log(url)
-    const response = $fetch(url);
-    return response;
+const asyncData = await useFetch(
+  "/api/history",
+  {
+    key: `/api/history`,
   }
 );
+
 
 const data = asyncData.data.value as Record[];
 
 // fetchデータを整形
-for (let d of data) {
-  d.datetime = d.datetime.slice(0, 19); // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+if (data != undefined) { // 取得済の場合のみ
+  for (let d of data) {
+    d.datetime = d.datetime.slice(0, 19); // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+  }
 }
+
 
 recordList.value = data
 
