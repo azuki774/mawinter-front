@@ -5,7 +5,7 @@ const recordList = ref<Record[]>()
 const asyncData = await useAsyncData(
   `history`,
   (): Promise<any> => {
-    const url = config.public.mawinterApi + "/v2/records";
+    const url = config.public.mawinterApi + "/v2/record";
     const response = $fetch(url);
     return response;
   }
