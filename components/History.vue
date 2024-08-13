@@ -14,9 +14,12 @@ const asyncData = await useAsyncData(
 const data = asyncData.data.value as Record[];
 
 // fetchデータを整形
-for (let d of data) {
-  d.datetime = d.datetime.slice(0, 19); // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+if (data != undefined) { // 取得済の場合のみ
+  for (let d of data) {
+    d.datetime = d.datetime.slice(0, 19); // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+  }
 }
+
 
 recordList.value = data
 
