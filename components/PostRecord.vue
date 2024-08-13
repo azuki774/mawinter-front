@@ -12,19 +12,29 @@ const asyncData = await useAsyncData(
 );
 
 const data = asyncData.data.value as Category[];
+// category 加工
+for (let d of data) {
+  // 100, category_name -> 100:category_name という表示に
+  // ただし加工済の場合は skip
+  if (d.category_name[3] != ":") {
+    d.category_name = d.category_id + ":" + d.category_name
+  }
+}
+
+
 categoryList.value = data
 
 // pricebox
 const priceBox = ref<number>()
 
 const postButton = async (): Promise<void> => {
-  console.log('start')
   const asyncData = await useAsyncData(
     `record`,
     (): Promise<any> => {
-      const url = "/api/postRecord"
-      const response = $fetch(url);
-      console.log('response')
+      const param = { 'price': priceBox.value, 'category_id': 200 } // TODO: 固定値
+      const paramStr = "?price=" + param['price'] + "&category_id=" + param['category_id']
+      const localurl = "/api/postRecord" + paramStr
+      const response = $fetch(localurl);
       return response;
     }
   );
