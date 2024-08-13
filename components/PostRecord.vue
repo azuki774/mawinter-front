@@ -13,12 +13,15 @@ const asyncData = await useAsyncData(
 );
 
 const data = asyncData.data.value as Category[];
+
 // category 加工
-for (let d of data) {
-  // 100, category_name -> 100:category_name という表示に
-  // ただし加工済の場合は skip
-  if (d.category_name[3] != ":") {
-    d.category_name = d.category_id + ":" + d.category_name
+if (data != undefined) { // 取得済の場合のみ
+  for (let d of data) {
+    // 100, category_name -> 100:category_name という表示に
+    // ただし加工済の場合は skip
+    if (d.category_name[3] != ":") {
+      d.category_name = d.category_id + ":" + d.category_name
+    }
   }
 }
 
