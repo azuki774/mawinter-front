@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Category } from "@/interfaces";
 const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
+const selector = ref<any>()
 const categoryList = ref<Category[]>()
 const asyncData = await useAsyncData(
   `records`,
@@ -21,7 +22,6 @@ for (let d of data) {
   }
 }
 
-
 categoryList.value = data
 
 // pricebox
@@ -31,7 +31,8 @@ const postButton = async (): Promise<void> => {
   const asyncData = await useAsyncData(
     `record`,
     (): Promise<any> => {
-      const param = { 'price': priceBox.value, 'category_id': 200 } // TODO: 固定値
+      const send_category_id = selector.value.slice(0, 3) // 210-食費→210
+      const param = { 'price': priceBox.value, 'category_id': send_category_id } // TODO: 固定値
       const paramStr = "?price=" + param['price'] + "&category_id=" + param['category_id']
       const localurl = "/api/postRecord" + paramStr
       const response = $fetch(localurl);
@@ -45,7 +46,7 @@ const postButton = async (): Promise<void> => {
 <template>
   <section>
 
-    <select name="categorySelector">
+    <select v-model="selector">
       <option v-for="category in categoryList" :key="category.category_id">
         {{ category.category_name }}
       </option>
