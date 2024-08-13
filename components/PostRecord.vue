@@ -29,7 +29,7 @@ categoryList.value = data
 const priceBox = ref<number>()
 
 const postButton = async (): Promise<void> => {
-  const asyncData = await useAsyncData(
+  const asyncDataBtn = await useAsyncData(
     `record`,
     (): Promise<any> => {
       const send_category_id = selector.value.slice(0, 3) // 210-食費→210
@@ -40,6 +40,7 @@ const postButton = async (): Promise<void> => {
       return response;
     }
   );
+  location.reload()
 };
 
 </script>
