@@ -19,7 +19,7 @@ categoryList.value = data2
 <template>
   <section>
     <select name="categorySelector">
-      <option v-for="category in categoryList" :key="categoryList">
+      <option v-for="category in categoryList" :key="category.category_id">
         {{ category.category_name }}
       </option>
     </select>
