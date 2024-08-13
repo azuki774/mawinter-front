@@ -2,14 +2,13 @@
 import type { Record } from "@/interfaces";
 const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
 const recordList = ref<Record[]>()
-const asyncData = await useAsyncData(
-  `history`,
-  (): Promise<any> => {
-    const url = config.public.mawinterApi + "/v2/record";
-    const response = $fetch(url);
-    return response;
+const asyncData = await useFetch(
+  "/api/history",
+  {
+    key: `/api/history`,
   }
 );
+
 
 const data = asyncData.data.value as Record[];
 
