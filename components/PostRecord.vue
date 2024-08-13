@@ -33,7 +33,7 @@ const postButton = async (): Promise<void> => {
     `record`,
     (): Promise<any> => {
       const send_category_id = selector.value.slice(0, 3) // 210-食費→210
-      const param = { 'price': priceBox.value, 'category_id': send_category_id } // TODO: 固定値
+      const param = { 'price': priceBox.value, 'category_id': send_category_id }
       const paramStr = "?price=" + param['price'] + "&category_id=" + param['category_id']
       const localurl = "/api/postRecord" + paramStr
       const response = $fetch(localurl);
