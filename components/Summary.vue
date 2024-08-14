@@ -2,8 +2,12 @@
 import type { SummaryOne } from "@/interfaces";
 const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
 const incomeList = ref<SummaryOne[]>()
+const incomeSumList = ref<SummaryOne>()
 const outgoingList = ref<SummaryOne[]>()
+const outgoingSumList = ref<SummaryOne>()
 const investList = ref<SummaryOne[]>()
+const investSumList = ref<SummaryOne>()
+let fetched: boolean
 const asyncData = await useFetch(
   "/api/summary",
   {
@@ -29,6 +33,8 @@ const asyncData = await useFetch(
   }
 );
 
+
+
 if (asyncData.data.value != undefined) {
   const incomeData = asyncData.data.value[0] as SummaryOne[];
   const outgoingData = asyncData.data.value[1] as SummaryOne[];
@@ -36,12 +42,74 @@ if (asyncData.data.value != undefined) {
   incomeList.value = incomeData
   outgoingList.value = outgoingData
   investList.value = investData
+
+  // sum の計算(income)
+  let incomeSumData: SummaryOne = {
+    category_id: 999,
+    category_name: "収入合計",
+    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    total: 0
+  };
+
+  for (let i: number = 0; i < 12; i++) {
+    let sum: number = 0;
+    let totalsum: number = 0;
+    for (let d of incomeData) {
+      sum += d.price[i];
+      totalsum += d.price[i];
+    }
+    incomeSumData.price[i] = sum;
+    incomeSumData.total += totalsum;
+  }
+  incomeSumList.value = incomeSumData
+
+  // sum の計算(outgoing)
+  let outgoingSumData: SummaryOne = {
+    category_id: 999,
+    category_name: "支出合計",
+    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    total: 0
+  };
+  for (let i: number = 0; i < 12; i++) {
+    let sum: number = 0;
+    let totalsum: number = 0;
+    for (let d of outgoingData) {
+      sum += d.price[i];
+      totalsum += d.price[i];
+    }
+    outgoingSumData.price[i] = sum;
+    outgoingSumData.total += totalsum;
+  }
+  outgoingSumList.value = outgoingSumData
+
+  // sum の計算(invest)
+  let investSumData: SummaryOne = {
+    category_id: 999,
+    category_name: "投資合計",
+    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    total: 0
+  };
+
+  for (let i: number = 0; i < 12; i++) {
+    let sum: number = 0;
+    let totalsum: number = 0;
+    for (let d of investData) {
+      sum += d.price[i];
+      totalsum += d.price[i];
+    }
+    investSumData.price[i] = sum;
+    investSumData.total += totalsum;
+  }
+  investSumList.value = investSumData
+
+  fetched = true // データ取得後のフラグを立てる
 }
 
 </script>
 
 <template>
   <section>
+    <h2>収入</h2>
     <table class="income_table">
       <thead>
         <tr>
@@ -80,9 +148,27 @@ if (asyncData.data.value != undefined) {
           <td>{{ income.price[11] }}</td>
           <td>{{ income.total }}</td>
         </tr>
+        <tr v-if="fetched">
+          <td>{{ incomeSumList.category_id }}</td>
+          <td>{{ incomeSumList.category_name }}</td>
+          <td>{{ incomeSumList.price[0] }}</td>
+          <td>{{ incomeSumList.price[1] }}</td>
+          <td>{{ incomeSumList.price[2] }}</td>
+          <td>{{ incomeSumList.price[3] }}</td>
+          <td>{{ incomeSumList.price[4] }}</td>
+          <td>{{ incomeSumList.price[5] }}</td>
+          <td>{{ incomeSumList.price[6] }}</td>
+          <td>{{ incomeSumList.price[7] }}</td>
+          <td>{{ incomeSumList.price[8] }}</td>
+          <td>{{ incomeSumList.price[9] }}</td>
+          <td>{{ incomeSumList.price[10] }}</td>
+          <td>{{ incomeSumList.price[11] }}</td>
+          <td>{{ incomeSumList.total }}</td>
+        </tr>
       </tbody>
     </table>
 
+    <h2>支出</h2>
     <table class="outgoing_table">
       <thead>
         <tr>
@@ -121,9 +207,27 @@ if (asyncData.data.value != undefined) {
           <td>{{ outgoing.price[11] }}</td>
           <td>{{ outgoing.total }}</td>
         </tr>
+        <tr v-if="fetched">
+          <td>{{ outgoingSumList.category_id }}</td>
+          <td>{{ outgoingSumList.category_name }}</td>
+          <td>{{ outgoingSumList.price[0] }}</td>
+          <td>{{ outgoingSumList.price[1] }}</td>
+          <td>{{ outgoingSumList.price[2] }}</td>
+          <td>{{ outgoingSumList.price[3] }}</td>
+          <td>{{ outgoingSumList.price[4] }}</td>
+          <td>{{ outgoingSumList.price[5] }}</td>
+          <td>{{ outgoingSumList.price[6] }}</td>
+          <td>{{ outgoingSumList.price[7] }}</td>
+          <td>{{ outgoingSumList.price[8] }}</td>
+          <td>{{ outgoingSumList.price[9] }}</td>
+          <td>{{ outgoingSumList.price[10] }}</td>
+          <td>{{ outgoingSumList.price[11] }}</td>
+          <td>{{ outgoingSumList.total }}</td>
+        </tr>
       </tbody>
     </table>
 
+    <h2>投資</h2>
     <table class="invest_table">
       <thead>
         <tr>
@@ -161,6 +265,23 @@ if (asyncData.data.value != undefined) {
           <td>{{ invest.price[10] }}</td>
           <td>{{ invest.price[11] }}</td>
           <td>{{ invest.total }}</td>
+        </tr>
+        <tr v-if="fetched">
+          <td>{{ investSumList.category_id }}</td>
+          <td>{{ investSumList.category_name }}</td>
+          <td>{{ investSumList.price[0] }}</td>
+          <td>{{ investSumList.price[1] }}</td>
+          <td>{{ investSumList.price[2] }}</td>
+          <td>{{ investSumList.price[3] }}</td>
+          <td>{{ investSumList.price[4] }}</td>
+          <td>{{ investSumList.price[5] }}</td>
+          <td>{{ investSumList.price[6] }}</td>
+          <td>{{ investSumList.price[7] }}</td>
+          <td>{{ investSumList.price[8] }}</td>
+          <td>{{ investSumList.price[9] }}</td>
+          <td>{{ investSumList.price[10] }}</td>
+          <td>{{ investSumList.price[11] }}</td>
+          <td>{{ investSumList.total }}</td>
         </tr>
       </tbody>
     </table>
