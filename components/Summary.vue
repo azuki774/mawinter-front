@@ -7,7 +7,10 @@ const outgoingList = ref<SummaryOne[]>()
 const outgoingSumList = ref<SummaryOne>()
 const investList = ref<SummaryOne[]>()
 const investSumList = ref<SummaryOne>()
-let fetched: boolean
+const AllSumList = ref<SummaryOne>() // 合計フィールド
+const AllSumWithoutInvestList = ref<SummaryOne>() // 合計（投資除く）フィールド
+
+let fetched: boolean // api fetch 出来ていたら true にする（表示制御用）
 const asyncData = await useFetch(
   "/api/summary",
   {
@@ -102,6 +105,33 @@ if (asyncData.data.value != undefined) {
   }
   investSumList.value = investSumData
 
+  // 合計テーブル用の計算
+  let AllSumData: SummaryOne = {
+    category_id: 999,
+    category_name: "合計",
+    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    total: 0
+  };
+
+  for (let i: number = 0; i < 12; i++) {
+    AllSumData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i] - investSumData.price[i];
+  }
+  AllSumData.total = incomeSumData.total - outgoingSumData.total - investSumData.total;
+  AllSumList.value = AllSumData
+
+  let AllSumWithoutInvestData: SummaryOne = {
+    category_id: 999,
+    category_name: "合計（投資除く）",
+    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    total: 0
+  };
+
+  for (let i: number = 0; i < 12; i++) {
+    AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i];
+  }
+  AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total;
+  AllSumWithoutInvestList.value = AllSumWithoutInvestData
+
   fetched = true // データ取得後のフラグを立てる
 }
 
@@ -109,6 +139,65 @@ if (asyncData.data.value != undefined) {
 
 <template>
   <section>
+    <h2>合計</h2>
+    <table class="all_table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>カテゴリ名</th>
+          <th>4月</th>
+          <th>5月</th>
+          <th>6月</th>
+          <th>7月</th>
+          <th>8月</th>
+          <th>9月</th>
+          <th>10月</th>
+          <th>11月</th>
+          <th>12月</th>
+          <th>1月</th>
+          <th>2月</th>
+          <th>3月</th>
+          <th>合計</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="fetched">
+          <td>{{ AllSumList.category_id }}</td>
+          <td>{{ AllSumList.category_name }}</td>
+          <td>{{ AllSumList.price[0] }}</td>
+          <td>{{ AllSumList.price[1] }}</td>
+          <td>{{ AllSumList.price[2] }}</td>
+          <td>{{ AllSumList.price[3] }}</td>
+          <td>{{ AllSumList.price[4] }}</td>
+          <td>{{ AllSumList.price[5] }}</td>
+          <td>{{ AllSumList.price[6] }}</td>
+          <td>{{ AllSumList.price[7] }}</td>
+          <td>{{ AllSumList.price[8] }}</td>
+          <td>{{ AllSumList.price[9] }}</td>
+          <td>{{ AllSumList.price[10] }}</td>
+          <td>{{ AllSumList.price[11] }}</td>
+          <td>{{ AllSumList.total }}</td>
+        </tr>
+        <tr v-if="fetched">
+          <td>{{ AllSumWithoutInvestList.category_id }}</td>
+          <td>{{ AllSumWithoutInvestList.category_name }}</td>
+          <td>{{ AllSumWithoutInvestList.price[0] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[1] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[2] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[3] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[4] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[5] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[6] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[7] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[8] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[9] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[10] }}</td>
+          <td>{{ AllSumWithoutInvestList.price[11] }}</td>
+          <td>{{ AllSumWithoutInvestList.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h2>収入</h2>
     <table class="income_table">
       <thead>
