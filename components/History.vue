@@ -25,7 +25,7 @@ recordList.value = data
 </script>
 
 <template>
-  <section>
+  <container>
     <table class="table">
       <thead>
         <tr>
@@ -46,5 +46,5 @@ recordList.value = data
         </tr>
       </tbody>
     </table>
-  </section>
+  </container>
 </template>

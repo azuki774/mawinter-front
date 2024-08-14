@@ -46,8 +46,7 @@ const postButton = async (): Promise<void> => {
 </script>
 
 <template>
-  <section>
-
+  <container>
     <select v-model="selector">
       <option v-for="category in categoryList" :key="category.category_id">
         {{ category.category_name }}
@@ -59,6 +58,5 @@ const postButton = async (): Promise<void> => {
     <div class="col">
       <button @click="postButton" name="postButton" class="sendbutton" type="submit">Post</button>
     </div>
-
-  </section>
+  </container>
 </template>
