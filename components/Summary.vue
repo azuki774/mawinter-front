@@ -9,7 +9,7 @@ const asyncData = await useFetch(
     transform: (data: SummaryOne[]): SummaryOne[] => {
       let retArray: SummaryOne[] = [];
       for (let d of data) {
-        if (d.category_id == 210) {
+        if ([210, 220].includes(d.category_id)) {
           retArray.push(d)
         }
       }
