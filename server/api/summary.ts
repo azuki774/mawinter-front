@@ -3,7 +3,7 @@ export default defineEventHandler ( async (event) => {
   const url = config.public.mawinterApi + "/v2/record/summary/2024"
   const result = await $fetch(url,
     {
-        method: "GET",
+      method: "GET",
     }
   )
   return result
