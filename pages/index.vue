@@ -5,6 +5,8 @@
     <PostRecord />
   </section>
 
+  <NuxtLink to='/summary'>サマリー表示</NuxtLink>
+
   <section>
     <h2>直近履歴</h2>
     <History />
