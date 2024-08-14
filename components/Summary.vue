@@ -138,6 +138,7 @@ if (asyncData.data.value != undefined) {
 </script>
 
 <template>
+  <NuxtLink to='/'>トップに戻る</NuxtLink>
   <section>
     <h2>合計</h2>
     <table class="all_table">
