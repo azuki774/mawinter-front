@@ -138,242 +138,246 @@ if (asyncData.data.value != undefined) {
 </script>
 
 <template>
-  <NuxtLink to='/'>トップに戻る</NuxtLink>
+
   <container>
-    <h2>合計</h2>
-    <b-table class="all_table">
+    <b-p text-alignment="center">
+      <NuxtLink to='/'>トップに戻る</NuxtLink>
+    </b-p>
+
+    <b-h level="2">合計</b-h>
+    <b-table small bordered striped class="all_table">
       <b-thead>
         <b-tr>
-          <b-th>ID</b-th>
-          <b-th>カテゴリ名</b-th>
-          <b-th>4月</b-th>
-          <b-th>5月</b-th>
-          <b-th>6月</b-th>
-          <b-th>7月</b-th>
-          <b-th>8月</b-th>
-          <b-th>9月</b-th>
-          <b-th>10月</b-th>
-          <b-th>11月</b-th>
-          <b-th>12月</b-th>
-          <b-th>1月</b-th>
-          <b-th>2月</b-th>
-          <b-th>3月</b-th>
-          <b-th>合計</b-th>
+          <b-th style="width: 5%">ID</b-th>
+          <b-th style="width: 10%">カテゴリ名</b-th>
+          <b-th style="width: 5%">4月</b-th>
+          <b-th style="width: 5%">5月</b-th>
+          <b-th style="width: 5%">6月</b-th>
+          <b-th style="width: 5%">7月</b-th>
+          <b-th style="width: 5%">8月</b-th>
+          <b-th style="width: 5%">9月</b-th>
+          <b-th style="width: 5%">10月</b-th>
+          <b-th style="width: 5%">11月</b-th>
+          <b-th style="width: 5%">12月</b-th>
+          <b-th style="width: 5%">1月</b-th>
+          <b-th style="width: 5%">2月</b-th>
+          <b-th style="width: 5%">3月</b-th>
+          <b-th style="width: 5%">合計</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
         <b-tr v-if="fetched">
           <b-td>{{ AllSumList.category_id }}</b-td>
           <b-td>{{ AllSumList.category_name }}</b-td>
-          <b-td>{{ AllSumList.price[0] }}</b-td>
-          <b-td>{{ AllSumList.price[1] }}</b-td>
-          <b-td>{{ AllSumList.price[2] }}</b-td>
-          <b-td>{{ AllSumList.price[3] }}</b-td>
-          <b-td>{{ AllSumList.price[4] }}</b-td>
-          <b-td>{{ AllSumList.price[5] }}</b-td>
-          <b-td>{{ AllSumList.price[6] }}</b-td>
-          <b-td>{{ AllSumList.price[7] }}</b-td>
-          <b-td>{{ AllSumList.price[8] }}</b-td>
-          <b-td>{{ AllSumList.price[9] }}</b-td>
-          <b-td>{{ AllSumList.price[10] }}</b-td>
-          <b-td>{{ AllSumList.price[11] }}</b-td>
-          <b-td>{{ AllSumList.total }}</b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumList.total }}</b-div></b-td>
         </b-tr>
         <b-tr v-if="fetched">
           <b-td>{{ AllSumWithoutInvestList.category_id }}</b-td>
           <b-td>{{ AllSumWithoutInvestList.category_name }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[0] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[1] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[2] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[3] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[4] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[5] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[6] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[7] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[8] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[9] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[10] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.price[11] }}</b-td>
-          <b-td>{{ AllSumWithoutInvestList.total }}</b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ AllSumWithoutInvestList.total }}</b-div></b-td>
         </b-tr>
       </b-tbody>
     </b-table>
 
-    <h2>収入</h2>
-    <b-table class="income_table">
+    <b-h level="2">収入</b-h>
+    <b-table small bordered striped class="income_table">
       <b-thead>
         <b-tr>
-          <b-th>ID</b-th>
-          <b-th>カテゴリ名</b-th>
-          <b-th>4月</b-th>
-          <b-th>5月</b-th>
-          <b-th>6月</b-th>
-          <b-th>7月</b-th>
-          <b-th>8月</b-th>
-          <b-th>9月</b-th>
-          <b-th>10月</b-th>
-          <b-th>11月</b-th>
-          <b-th>12月</b-th>
-          <b-th>1月</b-th>
-          <b-th>2月</b-th>
-          <b-th>3月</b-th>
-          <b-th>合計</b-th>
+          <b-th style="width: 5%">ID</b-th>
+          <b-th style="width: 10%">カテゴリ名</b-th>
+          <b-th style="width: 5%">4月</b-th>
+          <b-th style="width: 5%">5月</b-th>
+          <b-th style="width: 5%">6月</b-th>
+          <b-th style="width: 5%">7月</b-th>
+          <b-th style="width: 5%">8月</b-th>
+          <b-th style="width: 5%">9月</b-th>
+          <b-th style="width: 5%">10月</b-th>
+          <b-th style="width: 5%">11月</b-th>
+          <b-th style="width: 5%">12月</b-th>
+          <b-th style="width: 5%">1月</b-th>
+          <b-th style="width: 5%">2月</b-th>
+          <b-th style="width: 5%">3月</b-th>
+          <b-th style="width: 5%">合計</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
         <b-tr v-for="income in incomeList">
           <b-td>{{ income.category_id }}</b-td>
           <b-td>{{ income.category_name }}</b-td>
-          <b-td>{{ income.price[0] }}</b-td>
-          <b-td>{{ income.price[1] }}</b-td>
-          <b-td>{{ income.price[2] }}</b-td>
-          <b-td>{{ income.price[3] }}</b-td>
-          <b-td>{{ income.price[4] }}</b-td>
-          <b-td>{{ income.price[5] }}</b-td>
-          <b-td>{{ income.price[6] }}</b-td>
-          <b-td>{{ income.price[7] }}</b-td>
-          <b-td>{{ income.price[8] }}</b-td>
-          <b-td>{{ income.price[9] }}</b-td>
-          <b-td>{{ income.price[10] }}</b-td>
-          <b-td>{{ income.price[11] }}</b-td>
-          <b-td>{{ income.total }}</b-td>
+          <b-td><b-div float="end">{{ income.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ income.total }}</b-div></b-td>
         </b-tr>
-        <b-tr v-if="fetched">
+        <b-tr v-if="fetched" theme="success">
           <b-td>{{ incomeSumList.category_id }}</b-td>
           <b-td>{{ incomeSumList.category_name }}</b-td>
-          <b-td>{{ incomeSumList.price[0] }}</b-td>
-          <b-td>{{ incomeSumList.price[1] }}</b-td>
-          <b-td>{{ incomeSumList.price[2] }}</b-td>
-          <b-td>{{ incomeSumList.price[3] }}</b-td>
-          <b-td>{{ incomeSumList.price[4] }}</b-td>
-          <b-td>{{ incomeSumList.price[5] }}</b-td>
-          <b-td>{{ incomeSumList.price[6] }}</b-td>
-          <b-td>{{ incomeSumList.price[7] }}</b-td>
-          <b-td>{{ incomeSumList.price[8] }}</b-td>
-          <b-td>{{ incomeSumList.price[9] }}</b-td>
-          <b-td>{{ incomeSumList.price[10] }}</b-td>
-          <b-td>{{ incomeSumList.price[11] }}</b-td>
-          <b-td>{{ incomeSumList.total }}</b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ incomeSumList.total }}</b-div></b-td>
         </b-tr>
       </b-tbody>
     </b-table>
 
-    <h2>支出</h2>
-    <b-table class="outgoing_table">
+    <b-h level="2">支出</b-h>
+    <b-table small bordered striped class="outgoing_table">
       <b-thead>
         <b-tr>
-          <b-th>ID</b-th>
-          <b-th>カテゴリ名</b-th>
-          <b-th>4月</b-th>
-          <b-th>5月</b-th>
-          <b-th>6月</b-th>
-          <b-th>7月</b-th>
-          <b-th>8月</b-th>
-          <b-th>9月</b-th>
-          <b-th>10月</b-th>
-          <b-th>11月</b-th>
-          <b-th>12月</b-th>
-          <b-th>1月</b-th>
-          <b-th>2月</b-th>
-          <b-th>3月</b-th>
-          <b-th>合計</b-th>
+          <b-th style="width: 5%">ID</b-th>
+          <b-th style="width: 10%">カテゴリ名</b-th>
+          <b-th style="width: 5%">4月</b-th>
+          <b-th style="width: 5%">5月</b-th>
+          <b-th style="width: 5%">6月</b-th>
+          <b-th style="width: 5%">7月</b-th>
+          <b-th style="width: 5%">8月</b-th>
+          <b-th style="width: 5%">9月</b-th>
+          <b-th style="width: 5%">10月</b-th>
+          <b-th style="width: 5%">11月</b-th>
+          <b-th style="width: 5%">12月</b-th>
+          <b-th style="width: 5%">1月</b-th>
+          <b-th style="width: 5%">2月</b-th>
+          <b-th style="width: 5%">3月</b-th>
+          <b-th style="width: 5%">合計</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
         <b-tr v-for="outgoing in outgoingList">
           <b-td>{{ outgoing.category_id }}</b-td>
           <b-td>{{ outgoing.category_name }}</b-td>
-          <b-td>{{ outgoing.price[0] }}</b-td>
-          <b-td>{{ outgoing.price[1] }}</b-td>
-          <b-td>{{ outgoing.price[2] }}</b-td>
-          <b-td>{{ outgoing.price[3] }}</b-td>
-          <b-td>{{ outgoing.price[4] }}</b-td>
-          <b-td>{{ outgoing.price[5] }}</b-td>
-          <b-td>{{ outgoing.price[6] }}</b-td>
-          <b-td>{{ outgoing.price[7] }}</b-td>
-          <b-td>{{ outgoing.price[8] }}</b-td>
-          <b-td>{{ outgoing.price[9] }}</b-td>
-          <b-td>{{ outgoing.price[10] }}</b-td>
-          <b-td>{{ outgoing.price[11] }}</b-td>
-          <b-td>{{ outgoing.total }}</b-td>
+          <b-td><b-div float="end">{{ outgoing.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoing.total }}</b-div></b-td>
         </b-tr>
-        <b-tr v-if="fetched">
+        <b-tr v-if="fetched" theme="danger">
           <b-td>{{ outgoingSumList.category_id }}</b-td>
           <b-td>{{ outgoingSumList.category_name }}</b-td>
-          <b-td>{{ outgoingSumList.price[0] }}</b-td>
-          <b-td>{{ outgoingSumList.price[1] }}</b-td>
-          <b-td>{{ outgoingSumList.price[2] }}</b-td>
-          <b-td>{{ outgoingSumList.price[3] }}</b-td>
-          <b-td>{{ outgoingSumList.price[4] }}</b-td>
-          <b-td>{{ outgoingSumList.price[5] }}</b-td>
-          <b-td>{{ outgoingSumList.price[6] }}</b-td>
-          <b-td>{{ outgoingSumList.price[7] }}</b-td>
-          <b-td>{{ outgoingSumList.price[8] }}</b-td>
-          <b-td>{{ outgoingSumList.price[9] }}</b-td>
-          <b-td>{{ outgoingSumList.price[10] }}</b-td>
-          <b-td>{{ outgoingSumList.price[11] }}</b-td>
-          <b-td>{{ outgoingSumList.total }}</b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ outgoingSumList.total }}</b-div></b-td>
         </b-tr>
       </b-tbody>
     </b-table>
 
-    <h2>投資</h2>
-    <b-table class="invest_table">
+    <b-table small bordered striped class="invest_table">
       <b-thead>
         <b-tr>
-          <b-th>ID</b-th>
-          <b-th>カテゴリ名</b-th>
-          <b-th>4月</b-th>
-          <b-th>5月</b-th>
-          <b-th>6月</b-th>
-          <b-th>7月</b-th>
-          <b-th>8月</b-th>
-          <b-th>9月</b-th>
-          <b-th>10月</b-th>
-          <b-th>11月</b-th>
-          <b-th>12月</b-th>
-          <b-th>1月</b-th>
-          <b-th>2月</b-th>
-          <b-th>3月</b-th>
-          <b-th>合計</b-th>
+          <b-th style="width: 5%">ID</b-th>
+          <b-th style="width: 10%">カテゴリ名</b-th>
+          <b-th style="width: 5%">4月</b-th>
+          <b-th style="width: 5%">5月</b-th>
+          <b-th style="width: 5%">6月</b-th>
+          <b-th style="width: 5%">7月</b-th>
+          <b-th style="width: 5%">8月</b-th>
+          <b-th style="width: 5%">9月</b-th>
+          <b-th style="width: 5%">10月</b-th>
+          <b-th style="width: 5%">11月</b-th>
+          <b-th style="width: 5%">12月</b-th>
+          <b-th style="width: 5%">1月</b-th>
+          <b-th style="width: 5%">2月</b-th>
+          <b-th style="width: 5%">3月</b-th>
+          <b-th style="width: 5%">合計</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
         <b-tr v-for="invest in investList">
           <b-td>{{ invest.category_id }}</b-td>
           <b-td>{{ invest.category_name }}</b-td>
-          <b-td>{{ invest.price[0] }}</b-td>
-          <b-td>{{ invest.price[1] }}</b-td>
-          <b-td>{{ invest.price[2] }}</b-td>
-          <b-td>{{ invest.price[3] }}</b-td>
-          <b-td>{{ invest.price[4] }}</b-td>
-          <b-td>{{ invest.price[5] }}</b-td>
-          <b-td>{{ invest.price[6] }}</b-td>
-          <b-td>{{ invest.price[7] }}</b-td>
-          <b-td>{{ invest.price[8] }}</b-td>
-          <b-td>{{ invest.price[9] }}</b-td>
-          <b-td>{{ invest.price[10] }}</b-td>
-          <b-td>{{ invest.price[11] }}</b-td>
-          <b-td>{{ invest.total }}</b-td>
+          <b-td><b-div float="end">{{ invest.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ invest.total }}</b-div></b-td>
         </b-tr>
-        <b-tr v-if="fetched">
+        <b-tr v-if="fetched" theme="warning">
           <b-td>{{ investSumList.category_id }}</b-td>
           <b-td>{{ investSumList.category_name }}</b-td>
-          <b-td>{{ investSumList.price[0] }}</b-td>
-          <b-td>{{ investSumList.price[1] }}</b-td>
-          <b-td>{{ investSumList.price[2] }}</b-td>
-          <b-td>{{ investSumList.price[3] }}</b-td>
-          <b-td>{{ investSumList.price[4] }}</b-td>
-          <b-td>{{ investSumList.price[5] }}</b-td>
-          <b-td>{{ investSumList.price[6] }}</b-td>
-          <b-td>{{ investSumList.price[7] }}</b-td>
-          <b-td>{{ investSumList.price[8] }}</b-td>
-          <b-td>{{ investSumList.price[9] }}</b-td>
-          <b-td>{{ investSumList.price[10] }}</b-td>
-          <b-td>{{ investSumList.price[11] }}</b-td>
-          <b-td>{{ investSumList.total }}</b-td>
+          <b-td><b-div float="end">{{ investSumList.price[0] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[1] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[2] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[3] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[4] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[5] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[6] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[7] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[8] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[9] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[10] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.price[11] }}</b-div></b-td>
+          <b-td><b-div float="end">{{ investSumList.total }}</b-div></b-td>
         </b-tr>
       </b-tbody>
     </b-table>
+
   </container>
 </template>
