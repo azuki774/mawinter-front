@@ -49,15 +49,20 @@ const postButton = async (): Promise<void> => {
   <container>
     <Row justify-content="md-center">
       <Col col="md-auto">
-      <select v-model="selector">
-        <option v-for="category in categoryList" :key="category.category_id">
+      <BFormSelect v-model="selector" margin="b-4">
+        <b-option v-for="category in categoryList" :key="category.category_id">
           {{ category.category_name }}
-        </option>
-      </select>
+        </b-option>
+      </BFormSelect>
       </Col>
 
       <Col col="md-auto">
-      <input v-model="priceBox" type="number" />
+      <BFormFloating margin="b-2">
+        <BFormInput v-model="priceBox" type="number" placeholder="name@example.com" />
+        <BFormLabel for="floatingInput">
+          Price
+        </BFormLabel>
+      </BFormFloating>
       </Col>
     </Row>
 
