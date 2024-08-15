@@ -47,16 +47,28 @@ const postButton = async (): Promise<void> => {
 
 <template>
   <container>
-    <select v-model="selector">
-      <option v-for="category in categoryList" :key="category.category_id">
-        {{ category.category_name }}
-      </option>
-    </select>
+    <Row justify-content="md-center">
+      <Col col="md-auto">
+      <BFormSelect v-model="selector" margin="b-4">
+        <b-option v-for="category in categoryList" :key="category.category_id">
+          {{ category.category_name }}
+        </b-option>
+      </BFormSelect>
+      </Col>
 
-    <input v-model="priceBox" type="number" />
+      <Col col="md-auto">
+      <BFormFloating margin="b-2">
+        <BFormInput v-model="priceBox" type="number" placeholder="name@example.com" />
+        <BFormLabel for="floatingInput">
+          Price
+        </BFormLabel>
+      </BFormFloating>
+      </Col>
+    </Row>
 
-    <div class="col">
-      <button @click="postButton" name="postButton" class="sendbutton" type="submit">Post</button>
-    </div>
+    <Col display="grid" gap="2" margin="x-auto" col="6">
+    <b-button button="primary" size="lg" @click="postButton" name="postButton" class="sendbutton"
+      type="submit">Post</b-button>
+    </Col>
   </container>
 </template>
