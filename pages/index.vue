@@ -1,25 +1,29 @@
 <template>
-  <b-h level="1">mawinter-front</b-h>
+  <h1>mawinter-front</h1>
   <section>
-    <b-p text-alignment="center">
-      <b-h level="2">登録</b-h>
-      <PostRecord />
-    </b-p>
+    <p text-alignment="center">
+    <h2>登録</h2>
+    <PostRecord />
+    </p>
 
-    <b-p text-alignment="center">
-      <div class="summary_link">
-        <NuxtLink to='/summary'>サマリー表示</NuxtLink>
-      </div>
-    </b-p>
+    <div class="summary_link">
+      <a href="/summary">サマリー表示</a>
+    </div>
 
-    <b-p text-alignment="center">
-      <b-h level="2">直近履歴</b-h>
-      <History />
-    </b-p>
+    <p text-alignment="center">
+    <h2>直近履歴</h2>
+    <History />
+    </p>
   </section>
 </template>
 
 <style lang="css">
+h2 {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .summary_link {
   text-align: center;
   margin-left: auto;

@@ -46,29 +46,24 @@ const postButton = async (): Promise<void> => {
 </script>
 
 <template>
-  <container>
-    <Row justify-content="md-center">
-      <Col col="md-auto">
-      <BFormSelect v-model="selector" margin="b-4">
-        <b-option v-for="category in categoryList" :key="category.category_id">
-          {{ category.category_name }}
-        </b-option>
-      </BFormSelect>
-      </Col>
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-2">
+        <select v-model="selector" class="form-select">
+          <option v-for="category in categoryList" :key="category.category_id">
+            {{ category.category_name }}
+          </option>
+        </select>
+      </div>
 
-      <Col col="md-auto">
-      <BFormFloating margin="b-2">
-        <BFormInput v-model="priceBox" type="number" placeholder="name@example.com" />
-        <BFormLabel for="floatingInput">
-          Price
-        </BFormLabel>
-      </BFormFloating>
-      </Col>
-    </Row>
+      <div class="col-2 mb-3">
+        <input v-model="priceBox" type="number" placeholder="Value" />
+      </div>
+    </div>
 
-    <Col display="grid" gap="2" margin="x-auto" col="6">
-    <b-button button="primary" size="lg" @click="postButton" name="postButton" class="sendbutton"
-      type="submit">Post</b-button>
-    </Col>
-  </container>
+    <div class="d-grid col-2 mx-auto">
+      <button class="btn btn-primary" @click="postButton" name="postButton" type="submit">Post</button>
+    </div>
+
+  </div>
 </template>
