@@ -138,14 +138,11 @@ if (asyncData.data.value != undefined) {
 </script>
 
 <template>
-
   <div class="container">
-    <p text-alignment="center">
-      <NuxtLink to='/'>トップに戻る</NuxtLink>
-    </p>
+    <NuxtLink to='/'>トップに戻る</NuxtLink>
 
     <h2>合計</h2>
-    <table class="small bordered striped table-bordered">
+    <table class="table small bordered striped table-bordered">
       <thead>
         <tr>
           <th scope="col" style="width: 3%">ID</th>
@@ -166,6 +163,7 @@ if (asyncData.data.value != undefined) {
         </tr>
       </thead>
       <tbody>
+        <th scope="row"></th>
         <tr v-if="fetched">
           <td>{{ AllSumList.category_id }}</td>
           <td>{{ AllSumList.category_name }}</td>
@@ -209,7 +207,7 @@ if (asyncData.data.value != undefined) {
             <div class="text-end">{{ AllSumList.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched">
+        <tr v-if="fetched" class="table-info">
           <td>{{ AllSumWithoutInvestList.category_id }}</td>
           <td>{{ AllSumWithoutInvestList.category_name }}</td>
           <td>
@@ -256,7 +254,7 @@ if (asyncData.data.value != undefined) {
     </table>
 
     <h2>収入</h2>
-    <table class="small bordered striped">
+    <table class="table small bordered striped table-bordered">
       <thead>
         <tr>
           <th scope="col" style="width: 3%">ID</th>
@@ -320,7 +318,7 @@ if (asyncData.data.value != undefined) {
             <div class="text-end">{{ income.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" theme="success">
+        <tr v-if="fetched" class="table-success">
           <td>{{ incomeSumList.category_id }}</td>
           <td>{{ incomeSumList.category_name }}</td>
           <td>
@@ -367,7 +365,7 @@ if (asyncData.data.value != undefined) {
     </table>
 
     <h2>支出</h2>
-    <table class="small bordered striped">
+    <table class="table small bordered striped table-bordered">
       <thead>
         <tr>
           <th scope="col" style="width: 3%">ID</th>
@@ -431,7 +429,7 @@ if (asyncData.data.value != undefined) {
             <div class="text-end">{{ outgoing.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" theme="danger">
+        <tr v-if="fetched" class="table-danger">
           <td>{{ outgoingSumList.category_id }}</td>
           <td>{{ outgoingSumList.category_name }}</td>
           <td>
@@ -477,7 +475,8 @@ if (asyncData.data.value != undefined) {
       </tbody>
     </table>
 
-    <table class="small bordered striped">
+    <h2>投資</h2>
+    <table class="table small bordered striped table-bordered">
       <thead>
         <tr>
           <th scope="col" style="width: 3%">ID</th>
@@ -494,7 +493,7 @@ if (asyncData.data.value != undefined) {
           <th scope="col" style="width: 5%">1月</th>
           <th scope="col" style="width: 5%">2月</th>
           <th scope="col" style="width: 5%">3月</th>
-          <th scope="col" style="width: 7%">合計</th>
+          <th scope="col" style="width: 7%"">合計</th>
         </tr>
       </thead>
       <tbody>
@@ -541,7 +540,7 @@ if (asyncData.data.value != undefined) {
             <div class="text-end">{{ invest.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" theme="warning">
+        <tr v-if="fetched" class="table-warning">
           <td>{{ investSumList.category_id }}</td>
           <td>{{ investSumList.category_name }}</td>
           <td>
@@ -584,7 +583,7 @@ if (asyncData.data.value != undefined) {
             <div class="text-end">{{ investSumList.total }}</div>
           </td>
         </tr>
-      </tbody>
+        </tbody>
     </table>
 
   </div>
