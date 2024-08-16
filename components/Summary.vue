@@ -23,7 +23,7 @@ const asyncData = await useFetch(
         if ([100, 101, 110].includes(d.category_id)) {
           incomeArray.push(d)
         }
-        if ([200, 210, 220, 221, 222, 230, 231, 240, 251, 260, 270, 280, 300, 400, 500].includes(d.category_id)) {
+        if ([200, 210, 220, 221, 222, 230, 231, 240, 250, 251, 260, 270, 280, 300, 400, 500].includes(d.category_id)) {
           outgoingArray.push(d)
         }
         if ([700, 701].includes(d.category_id)) {
@@ -497,7 +497,7 @@ if (asyncData.data.value != undefined) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="invest in investList">
+        <tr v-for=" invest in investList">
           <td>{{ invest.category_id }}</td>
           <td>{{ invest.category_name }}</td>
           <td>
