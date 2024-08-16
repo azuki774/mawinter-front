@@ -139,7 +139,7 @@ if (asyncData.data.value != undefined) {
 
 <template>
 
-  <container>
+  <div class="container">
     <p text-alignment="center">
       <NuxtLink to='/'>トップに戻る</NuxtLink>
     </p>
@@ -379,5 +379,5 @@ if (asyncData.data.value != undefined) {
       </tbody>
     </table>
 
-  </container>
+  </div>
 </template>
