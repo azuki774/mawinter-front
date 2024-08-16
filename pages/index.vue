@@ -6,11 +6,9 @@
     <PostRecord />
     </p>
 
-    <p text-alignment="center">
     <div class="summary_link">
       <NuxtLink to='/summary'>サマリー表示</NuxtLink>
     </div>
-    </p>
 
     <p text-alignment="center">
     <h2>直近履歴</h2>
