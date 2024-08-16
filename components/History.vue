@@ -25,8 +25,8 @@ recordList.value = data
 </script>
 
 <template>
-  <div class="container">
-    <table class="table">
+  <div class="container-sm">
+    <table class="table table-striped table-sm">
       <thead>
         <tr>
           <th>ID</th>
