@@ -7,7 +7,7 @@
     </p>
 
     <div class="summary_link">
-      <NuxtLink to='/summary'>サマリー表示</NuxtLink>
+      <a href="/summary">サマリー表示</a>
     </div>
 
     <p text-alignment="center">

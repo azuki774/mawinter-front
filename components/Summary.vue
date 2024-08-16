@@ -139,7 +139,7 @@ if (asyncData.data.value != undefined) {
 
 <template>
   <div class="container">
-    <NuxtLink to='/'>トップに戻る</NuxtLink>
+    <a href="../">トップに戻る</a>
 
     <h2>合計</h2>
     <table class="table small bordered striped table-bordered">
