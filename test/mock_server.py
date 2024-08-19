@@ -72,6 +72,11 @@ class MockHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
+    def do_DELETE(self):
+        self.send_response(204)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+
 def import_args():
     parser = argparse.ArgumentParser("mock server start")
 

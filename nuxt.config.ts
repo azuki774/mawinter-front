@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   css: ["bootstrap/dist/css/bootstrap.min.css"],
   devtools: { enabled: true },
   routeRules: {
-    "/": { ssr: false },
+    "/": { ssr: true },
   },
   runtimeConfig: {
     public: { // 外部から取得するにはpublic が必要
