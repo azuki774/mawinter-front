@@ -22,6 +22,25 @@ if (data != undefined) { // 取得済の場合のみ
 
 recordList.value = data
 
+async function showDeleteDialog(id: number): Promise<void> {
+  const userResponse: boolean = confirm("このデータを削除しますか");
+  if (userResponse == true) {
+    console.log('delete: id=' + id);
+    const asyncDataBtn = await useAsyncData(
+      `record`,
+      (): Promise<any> => {
+        const param = { 'id': id };
+        const paramStr = "?id=" + param['id'];
+        const localurl = "/api/deleteRecord" + paramStr
+        const response = $fetch(localurl);
+        return response;
+      }
+    );
+    location.reload()
+  }
+
+};
+
 </script>
 
 <template>
@@ -34,6 +53,7 @@ recordList.value = data
           <th>金額</th>
           <th>日付</th>
           <th>メモ</th>
+          <th>削除</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +63,7 @@ recordList.value = data
           <td>{{ record.price }}</td>
           <td>{{ record.datetime }}</td>
           <td>{{ record.memo }}</td>
+          <td><button class="btn btn-secondary" @click="showDeleteDialog(record.id)">削除</button></td>
         </tr>
       </tbody>
     </table>
