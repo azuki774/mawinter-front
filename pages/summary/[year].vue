@@ -166,89 +166,89 @@ if (asyncData.data.value != undefined) {
       <tbody>
         <th scope="row"></th>
         <tr v-if="fetched">
-          <td>{{ AllSumList.category_id }}</td>
-          <td>{{ AllSumList.category_name }}</td>
+          <td>{{ AllSumList?.category_id }}</td>
+          <td>{{ AllSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ AllSumList.price[0] }}</div>
+            <div class="text-end">{{ AllSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[1] }}</div>
+            <div class="text-end">{{ AllSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[2] }}</div>
+            <div class="text-end">{{ AllSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[3] }}</div>
+            <div class="text-end">{{ AllSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[4] }}</div>
+            <div class="text-end">{{ AllSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[5] }}</div>
+            <div class="text-end">{{ AllSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[6] }}</div>
+            <div class="text-end">{{ AllSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[7] }}</div>
+            <div class="text-end">{{ AllSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[8] }}</div>
+            <div class="text-end">{{ AllSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[9] }}</div>
+            <div class="text-end">{{ AllSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[10] }}</div>
+            <div class="text-end">{{ AllSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.price[11] }}</div>
+            <div class="text-end">{{ AllSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList.total }}</div>
+            <div class="text-end">{{ AllSumList?.total }}</div>
           </td>
         </tr>
         <tr v-if="fetched" class="table-info">
-          <td>{{ AllSumWithoutInvestList.category_id }}</td>
-          <td>{{ AllSumWithoutInvestList.category_name }}</td>
+          <td>{{ AllSumWithoutInvestList?.category_id }}</td>
+          <td>{{ AllSumWithoutInvestList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[0] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[1] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[2] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[3] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[4] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[5] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[6] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[7] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[8] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[9] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[10] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.price[11] }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList.total }}</div>
+            <div class="text-end">{{ AllSumWithoutInvestList?.total }}</div>
           </td>
         </tr>
       </tbody>
@@ -320,46 +320,46 @@ if (asyncData.data.value != undefined) {
           </td>
         </tr>
         <tr v-if="fetched" class="table-success">
-          <td>{{ incomeSumList.category_id }}</td>
-          <td>{{ incomeSumList.category_name }}</td>
+          <td>{{ incomeSumList?.category_id }}</td>
+          <td>{{ incomeSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[0] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[1] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[2] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[3] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[4] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[5] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[6] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[7] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[8] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[9] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[10] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.price[11] }}</div>
+            <div class="text-end">{{ incomeSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList.total }}</div>
+            <div class="text-end">{{ incomeSumList?.total }}</div>
           </td>
         </tr>
       </tbody>
@@ -431,46 +431,46 @@ if (asyncData.data.value != undefined) {
           </td>
         </tr>
         <tr v-if="fetched" class="table-danger">
-          <td>{{ outgoingSumList.category_id }}</td>
-          <td>{{ outgoingSumList.category_name }}</td>
+          <td>{{ outgoingSumList?.category_id }}</td>
+          <td>{{ outgoingSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[0] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[1] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[2] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[3] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[4] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[5] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[6] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[7] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[8] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[9] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[10] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.price[11] }}</div>
+            <div class="text-end">{{ outgoingSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList.total }}</div>
+            <div class="text-end">{{ outgoingSumList?.total }}</div>
           </td>
         </tr>
       </tbody>
@@ -542,46 +542,46 @@ if (asyncData.data.value != undefined) {
           </td>
         </tr>
         <tr v-if="fetched" class="table-warning">
-          <td>{{ investSumList.category_id }}</td>
-          <td>{{ investSumList.category_name }}</td>
+          <td>{{ investSumList?.category_id }}</td>
+          <td>{{ investSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ investSumList.price[0] }}</div>
+            <div class="text-end">{{ investSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[1] }}</div>
+            <div class="text-end">{{ investSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[2] }}</div>
+            <div class="text-end">{{ investSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[3] }}</div>
+            <div class="text-end">{{ investSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[4] }}</div>
+            <div class="text-end">{{ investSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[5] }}</div>
+            <div class="text-end">{{ investSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[6] }}</div>
+            <div class="text-end">{{ investSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[7] }}</div>
+            <div class="text-end">{{ investSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[8] }}</div>
+            <div class="text-end">{{ investSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[9] }}</div>
+            <div class="text-end">{{ investSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[10] }}</div>
+            <div class="text-end">{{ investSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.price[11] }}</div>
+            <div class="text-end">{{ investSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList.total }}</div>
+            <div class="text-end">{{ investSumList?.total }}</div>
           </td>
         </tr>
         </tbody>

@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type Year from './summary/[year].vue';
+
+const today = new Date();
+let thisYear = today.getFullYear();
+</script>
+
+
 <template>
   <h1>mawinter-front</h1>
   <section>
@@ -7,7 +15,9 @@
     </p>
 
     <div class="summary_link">
-      <a href="/summary">サマリー表示</a>
+      <NuxtLink v-bind:to="{name: 'summary-year', params: {year: thisYear}}">
+        サマリー表示
+      </NuxtLink>
     </div>
 
     <p text-alignment="center">
