@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import type { SummaryOne } from "@/interfaces";
-const config = useRuntimeConfig(); // nuxt.config.ts に書いてあるコンフィグを読み出す
+<script setup lang='ts'>
+import type { SummaryOne } from '@/interfaces'
+const config = useRuntimeConfig() // nuxt.config.ts に書いてあるコンフィグを読み出す
 const incomeList = ref<SummaryOne[]>()
 const incomeSumList = ref<SummaryOne>()
 const outgoingList = ref<SummaryOne[]>()
@@ -12,13 +12,13 @@ const AllSumWithoutInvestList = ref<SummaryOne>() // 合計（投資除く）フ
 
 let fetched: boolean // api fetch 出来ていたら true にする（表示制御用）
 const asyncData = await useFetch(
-  "/api/summary",
+  '/api/summary',
   {
     key: `/api/summary`,
     transform: (data: SummaryOne[]): SummaryOne[][] => {
-      let incomeArray: SummaryOne[] = [];
-      let outgoingArray: SummaryOne[] = [];
-      let investArray: SummaryOne[] = [];
+      let incomeArray: SummaryOne[] = []
+      let outgoingArray: SummaryOne[] = []
+      let investArray: SummaryOne[] = []
       for (let d of data) {
         if ([100, 101, 110].includes(d.category_id)) {
           incomeArray.push(d)
@@ -34,14 +34,14 @@ const asyncData = await useFetch(
       return retArray
     }
   }
-);
+)
 
 
 
 if (asyncData.data.value != undefined) {
-  const incomeData = asyncData.data.value[0] as SummaryOne[];
-  const outgoingData = asyncData.data.value[1] as SummaryOne[];
-  const investData = asyncData.data.value[2] as SummaryOne[];
+  const incomeData = asyncData.data.value[0] as SummaryOne[]
+  const outgoingData = asyncData.data.value[1] as SummaryOne[]
+  const investData = asyncData.data.value[2] as SummaryOne[]
   incomeList.value = incomeData
   outgoingList.value = outgoingData
   investList.value = investData
@@ -49,87 +49,87 @@ if (asyncData.data.value != undefined) {
   // sum の計算(income)
   let incomeSumData: SummaryOne = {
     category_id: 999,
-    category_name: "収入合計",
+    category_name: '収入合計',
     price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     total: 0
-  };
+  }
 
   for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0;
-    let totalsum: number = 0;
+    let sum: number = 0
+    let totalsum: number = 0
     for (let d of incomeData) {
-      sum += d.price[i];
-      totalsum += d.price[i];
+      sum += d.price[i]
+      totalsum += d.price[i]
     }
-    incomeSumData.price[i] = sum;
-    incomeSumData.total += totalsum;
+    incomeSumData.price[i] = sum
+    incomeSumData.total += totalsum
   }
   incomeSumList.value = incomeSumData
 
   // sum の計算(outgoing)
   let outgoingSumData: SummaryOne = {
     category_id: 999,
-    category_name: "支出合計",
+    category_name: '支出合計',
     price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     total: 0
-  };
+  }
   for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0;
-    let totalsum: number = 0;
+    let sum: number = 0
+    let totalsum: number = 0
     for (let d of outgoingData) {
-      sum += d.price[i];
-      totalsum += d.price[i];
+      sum += d.price[i]
+      totalsum += d.price[i]
     }
-    outgoingSumData.price[i] = sum;
-    outgoingSumData.total += totalsum;
+    outgoingSumData.price[i] = sum
+    outgoingSumData.total += totalsum
   }
   outgoingSumList.value = outgoingSumData
 
   // sum の計算(invest)
   let investSumData: SummaryOne = {
     category_id: 999,
-    category_name: "投資合計",
+    category_name: '投資合計',
     price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     total: 0
-  };
+  }
 
   for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0;
-    let totalsum: number = 0;
+    let sum: number = 0
+    let totalsum: number = 0
     for (let d of investData) {
-      sum += d.price[i];
-      totalsum += d.price[i];
+      sum += d.price[i]
+      totalsum += d.price[i]
     }
-    investSumData.price[i] = sum;
-    investSumData.total += totalsum;
+    investSumData.price[i] = sum
+    investSumData.total += totalsum
   }
   investSumList.value = investSumData
 
   // 合計テーブル用の計算
   let AllSumData: SummaryOne = {
     category_id: 999,
-    category_name: "合計",
+    category_name: '合計',
     price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     total: 0
-  };
+  }
 
   for (let i: number = 0; i < 12; i++) {
-    AllSumData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i] - investSumData.price[i];
+    AllSumData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i] - investSumData.price[i]
   }
-  AllSumData.total = incomeSumData.total - outgoingSumData.total - investSumData.total;
+  AllSumData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
   AllSumList.value = AllSumData
 
   let AllSumWithoutInvestData: SummaryOne = {
     category_id: 999,
-    category_name: "合計（投資除く）",
+    category_name: '合計（投資除く）',
     price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     total: 0
-  };
+  }
 
   for (let i: number = 0; i < 12; i++) {
-    AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i];
+    AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i]
   }
-  AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total;
+  AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
   AllSumWithoutInvestList.value = AllSumWithoutInvestData
 
   fetched = true // データ取得後のフラグを立てる
@@ -139,449 +139,449 @@ if (asyncData.data.value != undefined) {
 
 <template>
   <h1>サマリー表示</h1>
-  <div class="container">
-    <a href="../">トップに戻る</a>
+  <div class='container'>
+    <a href='../'>トップに戻る</a>
 
     <h2>合計</h2>
-    <table class="table small bordered striped table-bordered">
+    <table class='table small bordered striped table-bordered'>
       <thead>
         <tr>
-          <th scope="col" style="width: 3%">ID</th>
-          <th scope="col" style="width: 10%">カテゴリ名</th>
-          <th scope="col" style="width: 5%">4月</th>
-          <th scope="col" style="width: 5%">5月</th>
-          <th scope="col" style="width: 5%">6月</th>
-          <th scope="col" style="width: 5%">7月</th>
-          <th scope="col" style="width: 5%">8月</th>
-          <th scope="col" style="width: 5%">9月</th>
-          <th scope="col" style="width: 5%">10月</th>
-          <th scope="col" style="width: 5%">11月</th>
-          <th scope="col" style="width: 5%">12月</th>
-          <th scope="col" style="width: 5%">1月</th>
-          <th scope="col" style="width: 5%">2月</th>
-          <th scope="col" style="width: 5%">3月</th>
-          <th scope="col" style="width: 7%">合計</th>
+          <th scope='col' style='width: 3%'>ID</th>
+          <th scope='col' style='width: 10%'>カテゴリ名</th>
+          <th scope='col' style='width: 5%'>4月</th>
+          <th scope='col' style='width: 5%'>5月</th>
+          <th scope='col' style='width: 5%'>6月</th>
+          <th scope='col' style='width: 5%'>7月</th>
+          <th scope='col' style='width: 5%'>8月</th>
+          <th scope='col' style='width: 5%'>9月</th>
+          <th scope='col' style='width: 5%'>10月</th>
+          <th scope='col' style='width: 5%'>11月</th>
+          <th scope='col' style='width: 5%'>12月</th>
+          <th scope='col' style='width: 5%'>1月</th>
+          <th scope='col' style='width: 5%'>2月</th>
+          <th scope='col' style='width: 5%'>3月</th>
+          <th scope='col' style='width: 7%'>合計</th>
         </tr>
       </thead>
       <tbody>
-        <th scope="row"></th>
-        <tr v-if="fetched">
+        <th scope='row'></th>
+        <tr v-if='fetched'>
           <td>{{ AllSumList?.category_id }}</td>
           <td>{{ AllSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[0] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[1] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[2] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[3] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[4] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[5] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[6] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[7] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[8] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[9] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[10] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.price[11] }}</div>
+            <div class='text-end'>{{ AllSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumList?.total }}</div>
+            <div class='text-end'>{{ AllSumList?.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" class="table-info">
+        <tr v-if='fetched' class='table-info'>
           <td>{{ AllSumWithoutInvestList?.category_id }}</td>
           <td>{{ AllSumWithoutInvestList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[0] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[1] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[2] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[3] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[4] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[5] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[6] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[7] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[8] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[9] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[10] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.price[11] }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ AllSumWithoutInvestList?.total }}</div>
+            <div class='text-end'>{{ AllSumWithoutInvestList?.total }}</div>
           </td>
         </tr>
       </tbody>
     </table>
 
     <h2>収入</h2>
-    <table class="table small bordered striped table-bordered">
+    <table class='table small bordered striped table-bordered'>
       <thead>
         <tr>
-          <th scope="col" style="width: 3%">ID</th>
-          <th scope="col" style="width: 10%">カテゴリ名</th>
-          <th scope="col" style="width: 5%">4月</th>
-          <th scope="col" style="width: 5%">5月</th>
-          <th scope="col" style="width: 5%">6月</th>
-          <th scope="col" style="width: 5%">7月</th>
-          <th scope="col" style="width: 5%">8月</th>
-          <th scope="col" style="width: 5%">9月</th>
-          <th scope="col" style="width: 5%">10月</th>
-          <th scope="col" style="width: 5%">11月</th>
-          <th scope="col" style="width: 5%">12月</th>
-          <th scope="col" style="width: 5%">1月</th>
-          <th scope="col" style="width: 5%">2月</th>
-          <th scope="col" style="width: 5%">3月</th>
-          <th scope="col" style="width: 7%">合計</th>
+          <th scope='col' style='width: 3%'>ID</th>
+          <th scope='col' style='width: 10%'>カテゴリ名</th>
+          <th scope='col' style='width: 5%'>4月</th>
+          <th scope='col' style='width: 5%'>5月</th>
+          <th scope='col' style='width: 5%'>6月</th>
+          <th scope='col' style='width: 5%'>7月</th>
+          <th scope='col' style='width: 5%'>8月</th>
+          <th scope='col' style='width: 5%'>9月</th>
+          <th scope='col' style='width: 5%'>10月</th>
+          <th scope='col' style='width: 5%'>11月</th>
+          <th scope='col' style='width: 5%'>12月</th>
+          <th scope='col' style='width: 5%'>1月</th>
+          <th scope='col' style='width: 5%'>2月</th>
+          <th scope='col' style='width: 5%'>3月</th>
+          <th scope='col' style='width: 7%'>合計</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="income in incomeList">
+        <tr v-for='income in incomeList'>
           <td>{{ income.category_id }}</td>
           <td>{{ income.category_name }}</td>
           <td>
-            <div class="text-end">{{ income.price[0] }}</div>
+            <div class='text-end'>{{ income.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[1] }}</div>
+            <div class='text-end'>{{ income.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[2] }}</div>
+            <div class='text-end'>{{ income.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[3] }}</div>
+            <div class='text-end'>{{ income.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[4] }}</div>
+            <div class='text-end'>{{ income.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[5] }}</div>
+            <div class='text-end'>{{ income.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[6] }}</div>
+            <div class='text-end'>{{ income.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[7] }}</div>
+            <div class='text-end'>{{ income.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[8] }}</div>
+            <div class='text-end'>{{ income.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[9] }}</div>
+            <div class='text-end'>{{ income.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[10] }}</div>
+            <div class='text-end'>{{ income.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.price[11] }}</div>
+            <div class='text-end'>{{ income.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ income.total }}</div>
+            <div class='text-end'>{{ income.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" class="table-success">
+        <tr v-if='fetched' class='table-success'>
           <td>{{ incomeSumList?.category_id }}</td>
           <td>{{ incomeSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[0] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[1] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[2] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[3] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[4] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[5] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[6] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[7] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[8] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[9] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[10] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.price[11] }}</div>
+            <div class='text-end'>{{ incomeSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ incomeSumList?.total }}</div>
+            <div class='text-end'>{{ incomeSumList?.total }}</div>
           </td>
         </tr>
       </tbody>
     </table>
 
     <h2>支出</h2>
-    <table class="table small bordered striped table-bordered">
+    <table class='table small bordered striped table-bordered'>
       <thead>
         <tr>
-          <th scope="col" style="width: 3%">ID</th>
-          <th scope="col" style="width: 10%">カテゴリ名</th>
-          <th scope="col" style="width: 5%">4月</th>
-          <th scope="col" style="width: 5%">5月</th>
-          <th scope="col" style="width: 5%">6月</th>
-          <th scope="col" style="width: 5%">7月</th>
-          <th scope="col" style="width: 5%">8月</th>
-          <th scope="col" style="width: 5%">9月</th>
-          <th scope="col" style="width: 5%">10月</th>
-          <th scope="col" style="width: 5%">11月</th>
-          <th scope="col" style="width: 5%">12月</th>
-          <th scope="col" style="width: 5%">1月</th>
-          <th scope="col" style="width: 5%">2月</th>
-          <th scope="col" style="width: 5%">3月</th>
-          <th scope="col" style="width: 7%">合計</th>
+          <th scope='col' style='width: 3%'>ID</th>
+          <th scope='col' style='width: 10%'>カテゴリ名</th>
+          <th scope='col' style='width: 5%'>4月</th>
+          <th scope='col' style='width: 5%'>5月</th>
+          <th scope='col' style='width: 5%'>6月</th>
+          <th scope='col' style='width: 5%'>7月</th>
+          <th scope='col' style='width: 5%'>8月</th>
+          <th scope='col' style='width: 5%'>9月</th>
+          <th scope='col' style='width: 5%'>10月</th>
+          <th scope='col' style='width: 5%'>11月</th>
+          <th scope='col' style='width: 5%'>12月</th>
+          <th scope='col' style='width: 5%'>1月</th>
+          <th scope='col' style='width: 5%'>2月</th>
+          <th scope='col' style='width: 5%'>3月</th>
+          <th scope='col' style='width: 7%'>合計</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="outgoing in outgoingList">
+        <tr v-for='outgoing in outgoingList'>
           <td>{{ outgoing.category_id }}</td>
           <td>{{ outgoing.category_name }}</td>
           <td>
-            <div class="text-end">{{ outgoing.price[0] }}</div>
+            <div class='text-end'>{{ outgoing.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[1] }}</div>
+            <div class='text-end'>{{ outgoing.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[2] }}</div>
+            <div class='text-end'>{{ outgoing.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[3] }}</div>
+            <div class='text-end'>{{ outgoing.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[4] }}</div>
+            <div class='text-end'>{{ outgoing.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[5] }}</div>
+            <div class='text-end'>{{ outgoing.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[6] }}</div>
+            <div class='text-end'>{{ outgoing.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[7] }}</div>
+            <div class='text-end'>{{ outgoing.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[8] }}</div>
+            <div class='text-end'>{{ outgoing.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[9] }}</div>
+            <div class='text-end'>{{ outgoing.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[10] }}</div>
+            <div class='text-end'>{{ outgoing.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.price[11] }}</div>
+            <div class='text-end'>{{ outgoing.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoing.total }}</div>
+            <div class='text-end'>{{ outgoing.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" class="table-danger">
+        <tr v-if='fetched' class='table-danger'>
           <td>{{ outgoingSumList?.category_id }}</td>
           <td>{{ outgoingSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[0] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[1] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[2] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[3] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[4] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[5] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[6] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[7] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[8] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[9] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[10] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.price[11] }}</div>
+            <div class='text-end'>{{ outgoingSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ outgoingSumList?.total }}</div>
+            <div class='text-end'>{{ outgoingSumList?.total }}</div>
           </td>
         </tr>
       </tbody>
     </table>
 
     <h2>投資</h2>
-    <table class="table small bordered striped table-bordered">
+    <table class='table small bordered striped table-bordered'>
       <thead>
         <tr>
-          <th scope="col" style="width: 3%">ID</th>
-          <th scope="col" style="width: 10%">カテゴリ名</th>
-          <th scope="col" style="width: 5%">4月</th>
-          <th scope="col" style="width: 5%">5月</th>
-          <th scope="col" style="width: 5%">6月</th>
-          <th scope="col" style="width: 5%">7月</th>
-          <th scope="col" style="width: 5%">8月</th>
-          <th scope="col" style="width: 5%">9月</th>
-          <th scope="col" style="width: 5%">10月</th>
-          <th scope="col" style="width: 5%">11月</th>
-          <th scope="col" style="width: 5%">12月</th>
-          <th scope="col" style="width: 5%">1月</th>
-          <th scope="col" style="width: 5%">2月</th>
-          <th scope="col" style="width: 5%">3月</th>
-          <th scope="col" style="width: 7%"">合計</th>
+          <th scope='col' style='width: 3%'>ID</th>
+          <th scope='col' style='width: 10%'>カテゴリ名</th>
+          <th scope='col' style='width: 5%'>4月</th>
+          <th scope='col' style='width: 5%'>5月</th>
+          <th scope='col' style='width: 5%'>6月</th>
+          <th scope='col' style='width: 5%'>7月</th>
+          <th scope='col' style='width: 5%'>8月</th>
+          <th scope='col' style='width: 5%'>9月</th>
+          <th scope='col' style='width: 5%'>10月</th>
+          <th scope='col' style='width: 5%'>11月</th>
+          <th scope='col' style='width: 5%'>12月</th>
+          <th scope='col' style='width: 5%'>1月</th>
+          <th scope='col' style='width: 5%'>2月</th>
+          <th scope='col' style='width: 5%'>3月</th>
+          <th scope='col' style='width: 7%''>合計</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for=" invest in investList">
+        <tr v-for=' invest in investList'>
           <td>{{ invest.category_id }}</td>
           <td>{{ invest.category_name }}</td>
           <td>
-            <div class="text-end">{{ invest.price[0] }}</div>
+            <div class='text-end'>{{ invest.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[1] }}</div>
+            <div class='text-end'>{{ invest.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[2] }}</div>
+            <div class='text-end'>{{ invest.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[3] }}</div>
+            <div class='text-end'>{{ invest.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[4] }}</div>
+            <div class='text-end'>{{ invest.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[5] }}</div>
+            <div class='text-end'>{{ invest.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[6] }}</div>
+            <div class='text-end'>{{ invest.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[7] }}</div>
+            <div class='text-end'>{{ invest.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[8] }}</div>
+            <div class='text-end'>{{ invest.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[9] }}</div>
+            <div class='text-end'>{{ invest.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[10] }}</div>
+            <div class='text-end'>{{ invest.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.price[11] }}</div>
+            <div class='text-end'>{{ invest.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ invest.total }}</div>
+            <div class='text-end'>{{ invest.total }}</div>
           </td>
         </tr>
-        <tr v-if="fetched" class="table-warning">
+        <tr v-if='fetched' class='table-warning'>
           <td>{{ investSumList?.category_id }}</td>
           <td>{{ investSumList?.category_name }}</td>
           <td>
-            <div class="text-end">{{ investSumList?.price[0] }}</div>
+            <div class='text-end'>{{ investSumList?.price[0] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[1] }}</div>
+            <div class='text-end'>{{ investSumList?.price[1] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[2] }}</div>
+            <div class='text-end'>{{ investSumList?.price[2] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[3] }}</div>
+            <div class='text-end'>{{ investSumList?.price[3] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[4] }}</div>
+            <div class='text-end'>{{ investSumList?.price[4] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[5] }}</div>
+            <div class='text-end'>{{ investSumList?.price[5] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[6] }}</div>
+            <div class='text-end'>{{ investSumList?.price[6] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[7] }}</div>
+            <div class='text-end'>{{ investSumList?.price[7] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[8] }}</div>
+            <div class='text-end'>{{ investSumList?.price[8] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[9] }}</div>
+            <div class='text-end'>{{ investSumList?.price[9] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[10] }}</div>
+            <div class='text-end'>{{ investSumList?.price[10] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.price[11] }}</div>
+            <div class='text-end'>{{ investSumList?.price[11] }}</div>
           </td>
           <td>
-            <div class="text-end">{{ investSumList?.total }}</div>
+            <div class='text-end'>{{ investSumList?.total }}</div>
           </td>
         </tr>
         </tbody>
