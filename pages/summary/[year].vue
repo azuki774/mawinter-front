@@ -10,8 +10,11 @@ const AllSumList = ref<SummaryOne>() // 合計フィールド
 const AllSumWithoutInvestList = ref<SummaryOne>() // 合計（投資除く）フィールド
 
 let fetched: boolean // api fetch 出来ていたら true にする（表示制御用）
+
+const route = useRoute()
+const year = route.params.year
 const asyncData = await useFetch(
-  '/api/summary',
+  '/api/summary' + '?year=' + year, // webサーバ内ではクエリパラメータで渡す
   {
     key: `/api/summary`,
     transform: (data: SummaryOne[]): SummaryOne[][] => {
