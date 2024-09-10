@@ -1,20 +1,19 @@
 <script setup lang='ts'>
 import type { Category } from '@/interfaces'
-const config = useRuntimeConfig() // nuxt.config.ts に書いてあるコンフィグを読み出す
-const selector = ref<any>()
+let selector: string
 const categoryList = ref<Category[]>()
 const asyncData = await useFetch(
   '/api/getCategories',
   {
     key: `/api/getCategories`,
-  }
+  },
 )
 
 const data = asyncData.data.value as Category[]
 
 // category 加工
 if (data != undefined) { // 取得済の場合のみ
-  for (let d of data) {
+  for (const d of data) {
     // 100, category_name -> 100:category_name という表示に
     // ただし加工済の場合は skip
     if (d.category_name[3] != ':') {
@@ -29,16 +28,16 @@ categoryList.value = data
 const priceBox = ref<number>()
 
 const postButton = async (): Promise<void> => {
-  const asyncDataBtn = await useAsyncData(
+  await useAsyncData(
     `record`,
-    (): Promise<any> => {
-      const send_category_id = selector.value.slice(0, 3) // 210-食費→210
+    (): Promise<unknown> => {
+      const send_category_id = selector.slice(0, 3) // 210-食費→210
       const param = { price: priceBox.value, category_id: send_category_id }
       const paramStr = '?price=' + param['price'] + '&category_id=' + param['category_id']
       const localurl = '/api/postRecord' + paramStr
       const response = $fetch(localurl)
       return response
-    }
+    },
   )
   location.reload()
 }

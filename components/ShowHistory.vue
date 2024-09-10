@@ -1,44 +1,39 @@
 <script setup lang='ts'>
 import type { Record } from '@/interfaces'
-const config = useRuntimeConfig() // nuxt.config.ts に書いてあるコンフィグを読み出す
 const recordList = ref<Record[]>()
 const asyncData = await useFetch(
   '/api/history',
   {
     key: `/api/history`,
-  }
+  },
 )
-
 
 const data = asyncData.data.value as Record[]
 
 // fetchデータを整形
 if (data != undefined) { // 取得済の場合のみ
-  for (let d of data) {
+  for (const d of data) {
     d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
   }
 }
-
 
 recordList.value = data
 
 async function showDeleteDialog(id: number): Promise<void> {
   const userResponse: boolean = confirm('このデータを削除しますか')
   if (userResponse == true) {
-    console.log('delete: id=' + id)
-    const asyncDataBtn = await useAsyncData(
+    await useAsyncData(
       `record`,
-      (): Promise<any> => {
-        const param = { 'id': id }
+      (): Promise<unknown> => {
+        const param = { id: id }
         const paramStr = '?id=' + param['id']
         const localurl = '/api/deleteRecord' + paramStr
         const response = $fetch(localurl)
         return response
-      }
+      },
     )
     location.reload()
   }
-
 }
 
 </script>
@@ -57,7 +52,7 @@ async function showDeleteDialog(id: number): Promise<void> {
         </tr>
       </thead>
       <tbody>
-        <tr v-for='record in recordList'>
+        <tr v-for='record in recordList' :key=record.id>
           <td>{{ record.id }}</td>
           <td>{{ record.category_name }}</td>
           <td>{{ record.price }}</td>
