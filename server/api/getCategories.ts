@@ -1,10 +1,10 @@
-export default defineEventHandler ( async (event) => {
+export default defineEventHandler (async () => {
   const config = useRuntimeConfig()
-  const url = config.public.mawinterApi + "/categories"
+  const url = config.public.mawinterApi + '/categories'
   const result = await $fetch(url,
     {
-        method: "GET",
-    }
+      method: 'GET',
+    },
   )
   return result
 })

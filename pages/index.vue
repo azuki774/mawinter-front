@@ -1,23 +1,27 @@
+<script setup lang='ts'>
+const today = new Date()
+const thisYear = today.getFullYear()
+</script>
+
 <template>
-  <h1>mawinter-front</h1>
   <section>
-    <p text-alignment="center">
+  <h1>mawinter-front</h1>
     <h2>登録</h2>
     <PostRecord />
-    </p>
 
-    <div class="summary_link">
-      <a href="/summary">サマリー表示</a>
+    <div class='summary_link'>
+      <NuxtLink v-bind:to="{name: 'summary-year', params: {year: thisYear}}">
+        サマリー表示
+      </NuxtLink>
     </div>
 
-    <p text-alignment="center">
     <h2>直近履歴</h2>
-    <History />
-    </p>
+    <ShowHistory />
+
   </section>
 </template>
 
-<style lang="css">
+<style lang='css'>
 h2 {
   text-align: center;
   margin-left: auto;

@@ -1,4 +1,4 @@
-export default defineEventHandler ( async (event) => {
+export default defineEventHandler (async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
   // create body
@@ -10,13 +10,12 @@ export default defineEventHandler ( async (event) => {
   "memo":"手動"
   }
   `
-  console.log(reqbody)
-  const url = config.public.mawinterApi + "/v2/record"
+  const url = config.public.mawinterApi + '/v2/record'
   const result = await $fetch(url,
     {
-        method: "POST",
-        body: reqbody
-    }
+      method: 'POST',
+      body: reqbody,
+    },
   )
   return result
 })
