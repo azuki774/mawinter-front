@@ -1,30 +1,34 @@
 <script setup lang='ts'>
-import EasyDataTable from 'vue3-easy-data-table'
+import { ref } from 'vue'
 import type { Header, Item } from 'vue3-easy-data-table'
-import 'vue3-easy-data-table/dist/style.css'
 
-const headers: Header[] = [
-  { text: 'PLAYER', value: 'player' },
-  { text: 'TEAM', value: 'team' },
-  { text: 'NUMBER', value: 'number' },
-  { text: 'POSITION', value: 'position' },
-  { text: 'HEIGHT', value: 'indicator.height' },
-  { text: 'WEIGHT (lbs)', value: 'indicator.weight', sortable: true },
-  { text: 'LAST ATTENDED', value: 'lastAttended', width: 200 },
-  { text: 'COUNTRY', value: 'country' },
-]
+const headers = ref<Header[]>([
+  { text: 'ID', value: 'id' },
+  { text: 'カテゴリ名', value: 'category_name', sortable: true },
+  { text: '利用日', value: 'datetime' },
+  { text: '登録元', value: 'from' },
+  { text: '金額', value: 'price', sortable: true },
+  { text: 'メモ', value: 'memo' },
+])
 
-const items: Item[] = [
-  { player: 'Stephen Curry', team: 'GSW', number: 30, position: 'G', indicator: { height: '6-2', weight: 185 }, lastAttended: 'Davidson', country: 'USA' },
-  { player: 'Lebron James', team: 'LAL', number: 6, position: 'F', indicator: { height: '6-9', weight: 250 }, lastAttended: 'St. Vincent-St. Mary HS (OH)', country: 'USA' },
-  { player: 'Kevin Durant', team: 'BKN', number: 7, position: 'F', indicator: { height: '6-10', weight: 240 }, lastAttended: 'Texas-Austin', country: 'USA' },
-  { player: 'Giannis Antetokounmpo', team: 'MIL', number: 34, position: 'F', indicator: { height: '6-11', weight: 242 }, lastAttended: 'Filathlitikos', country: 'Greece' },
-]
+const items = ref<Item[]>([
+  { id: '1', category_name: 'カテゴリ名', datetime: '2025-01-01', from: 'テスト', price: 1234, memo: 'メモ欄' },
+])
+
+const addItem = () => {
+  items.value = [
+    { id: '2', category_name: '新しいカテゴリ', datetime: '2025-02-01', from: 'テスト2', price: 5678, memo: '新しいメモ' },
+    { id: '3', category_name: '別のカテゴリ', datetime: '2025-03-01', from: 'テスト3', price: 91011, memo: '別のメモ' },
+  ]
+}
+
 </script>
 
 <template>
-  <EasyDataTable
-    :headers='headers'
-    :items='items'
-  />
+    <div class='container text-center'>
+      <div class='row justify-content-center'>
+        <EasyDataTable :headers="headers" :items="items" />
+        <button @click="addItem">アイテムを追加</button>
+      </div>
+    </div>
 </template>

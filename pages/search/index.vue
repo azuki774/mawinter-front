@@ -2,7 +2,9 @@
 </script>
 
 <template>
-  <SearchHistory />
+  <section>
+    <SearchHistory />
+  </section>
 </template>
 
 <style lang='css'>
