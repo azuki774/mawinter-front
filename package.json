@@ -15,7 +15,8 @@
     "bootstrap": "^5.3.0",
     "eslint-plugin-react": "^7.35.0",
     "nuxt": "^3.12.4",
-    "vue": "latest"
+    "vue": "latest",
+    "vue3-easy-data-table": "^1.5.47"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.5.6",
