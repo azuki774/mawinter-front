@@ -3,7 +3,9 @@
 
 <template>
   <section>
-    <SearchHistory />
+    <div class='container-sm text-center'>
+      <SearchHistory />
+    </div>
   </section>
 </template>
 
