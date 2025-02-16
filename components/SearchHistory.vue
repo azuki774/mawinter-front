@@ -4,9 +4,9 @@ import type { Record } from '@/interfaces'
 import type { Header, Item } from 'vue3-easy-data-table'
 
 const asyncData = await useFetch(
-  '/api/getHistories?yyyymm=202502',
+  '/api/getHistories?yyyymm=202502&category_id=200', // TODO
   {
-    key: `/api/getHistories?yyyymm=202502`,
+    key: `/api/getHistories`,
   },
 )
 
