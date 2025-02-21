@@ -36,12 +36,19 @@ const options_yyyymm = ref([
   { value: '202412', label: '202412' },
 ])
 
-const selected_yyyymm_Value = ref('')
+const options_categoryID = ref([
+  { value: '200', label: '200' },
+  { value: '210', label: '210' },
+  { value: '220', label: '220' },
+])
+
+const selected_yyyymm_value = ref('')
+const selected_categoryID_value = ref('')
 
 // 選択変更時に実行する処理
-watch(selected_yyyymm_Value, (newValue) => {
+watch([selected_yyyymm_value, selected_categoryID_value], ([new_yyyymm_value, new_categoryID_value]) => {
   const fetchData = useFetch(
-    '/api/getHistories?yyyymm=' + newValue + '&category_id=200', // TODO
+    '/api/getHistories?yyyymm=' + new_yyyymm_value + '&category_id=' + new_categoryID_value,
     {
       key: `/api/getHistories`,
     },
@@ -56,13 +63,20 @@ watch(selected_yyyymm_Value, (newValue) => {
       <h2>レコード</h2>
       <div>
         <label for="dropdown">取得月:</label>
-        <select id="dropdown" v-model="selected_yyyymm_Value">
-          <option value="" disabled>選択してください</option>
+        <select id="dropdown" v-model="selected_yyyymm_value">
           <option v-for="option in options_yyyymm" :key="option.value" :value="option.value">
             {{ option.label }}
           </option>
         </select>
-        <p>選択された値: {{ selected_yyyymm_Value }}</p>
+
+        <label for="dropdown">カテゴリID:</label>
+        <select id="dropdown" v-model="selected_categoryID_value">
+          <option v-for="option in options_categoryID" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+
+        <p>選択された値: {{ selected_yyyymm_value }} : {{ selected_categoryID_value }}</p>
       </div>
       <EasyDataTable :headers="headers" :items="items" />
     </div>
