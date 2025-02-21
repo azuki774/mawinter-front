@@ -3,8 +3,30 @@ import { ref } from 'vue'
 import type { Record } from '@/interfaces'
 import type { Header, Item } from 'vue3-easy-data-table'
 
+const headers = ref<Header[]>([
+  { text: 'ID', value: 'id' },
+  { text: 'カテゴリ名', value: 'category_name', sortable: true },
+  { text: '利用日', value: 'datetime', sortable: true },
+  { text: '登録元', value: 'from' },
+  { text: '金額', value: 'price', sortable: true },
+  { text: 'メモ', value: 'memo' },
+])
+
+const options_yyyymm = ref([
+  { value: '202502', label: '202502' },
+  { value: '202501', label: '202501' },
+  { value: '202412', label: '202412' },
+])
+
+const options_categoryID = ref([
+  { value: 'all', label: 'all' },
+  { value: '200', label: '200' },
+  { value: '210', label: '210' },
+  { value: '220', label: '220' },
+])
+
 const asyncData = await useFetch(
-  '/api/getHistories?yyyymm=202502&category_id=200', // TODO
+  '/api/getHistories',
   {
     key: `/api/getHistories`,
   },
@@ -19,42 +41,26 @@ if (data != undefined) { // 取得済の場合のみ
   }
 }
 
-const headers = ref<Header[]>([
-  { text: 'ID', value: 'id' },
-  { text: 'カテゴリ名', value: 'category_name', sortable: true },
-  { text: '利用日', value: 'datetime', sortable: true },
-  { text: '登録元', value: 'from' },
-  { text: '金額', value: 'price', sortable: true },
-  { text: 'メモ', value: 'memo' },
-])
+const selected_yyyymm_value = ref(options_yyyymm.value[0].value) // 第1項目をデフォに
+const selected_categoryID_value = ref(options_categoryID.value[0].value) // 第1項目をデフォに
 
 const items = ref<Item[]>(data)
 
-const options_yyyymm = ref([
-  { value: '202502', label: '202502' },
-  { value: '202501', label: '202501' },
-  { value: '202412', label: '202412' },
-])
-
-const options_categoryID = ref([
-  { value: '200', label: '200' },
-  { value: '210', label: '210' },
-  { value: '220', label: '220' },
-])
-
-const selected_yyyymm_value = ref('')
-const selected_categoryID_value = ref('')
-
 // 選択変更時に実行する処理
 watch([selected_yyyymm_value, selected_categoryID_value], ([new_yyyymm_value, new_categoryID_value]) => {
+  let query = '?yyyymm=' + new_yyyymm_value
+  if (String(selected_categoryID_value.value) != 'all') {
+    query += '&category_id=' + new_categoryID_value
+  }
+
   const fetchData = useFetch(
-    '/api/getHistories?yyyymm=' + new_yyyymm_value + '&category_id=' + new_categoryID_value,
+    '/api/getHistories' + query,
     {
       key: `/api/getHistories`,
     },
   )
   items.value = fetchData.data.value as Record[]
-})
+}, { immediate: true }) // 初回ロード時に値が undefined になるのを防ぐ
 
 </script>
 
@@ -76,7 +82,7 @@ watch([selected_yyyymm_value, selected_categoryID_value], ([new_yyyymm_value, ne
           </option>
         </select>
 
-        <p>選択された値: {{ selected_yyyymm_value }} : {{ selected_categoryID_value }}</p>
+        <!-- <p>選択された値: {{ selected_yyyymm_value }} : {{ selected_categoryID_value }}</p> -->
       </div>
       <EasyDataTable :headers="headers" :items="items" />
     </div>
