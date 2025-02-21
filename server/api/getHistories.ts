@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
   if (query.category_id != undefined) {
     params.category_id = String(query.category_id)
   }
+  params.num = '1000' // default の取得限界数
 
   const queryParams = new URLSearchParams(params)
   const url = config.public.mawinterApi + '/v2/record?' + queryParams

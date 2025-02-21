@@ -65,25 +65,26 @@ watch([selected_yyyymm_value, selected_categoryID_value], ([new_yyyymm_value, ne
 </script>
 
 <template>
-      <div class='row justify-content-center'>
+    <div class='row justify-content-center'>
       <h2>レコード</h2>
-      <div>
+
+      <div class='col-2 mb-3'>
         <label for="dropdown">取得月:</label>
         <select id="dropdown" v-model="selected_yyyymm_value">
           <option v-for="option in options_yyyymm" :key="option.value" :value="option.value">
             {{ option.label }}
           </option>
         </select>
-
+      </div>
+      <div class='col-2 mb-3'>
         <label for="dropdown">カテゴリID:</label>
         <select id="dropdown" v-model="selected_categoryID_value">
           <option v-for="option in options_categoryID" :key="option.value" :value="option.value">
             {{ option.label }}
           </option>
         </select>
-
-        <!-- <p>選択された値: {{ selected_yyyymm_value }} : {{ selected_categoryID_value }}</p> -->
       </div>
+
       <EasyDataTable :headers="headers" :items="items" />
     </div>
 </template>
