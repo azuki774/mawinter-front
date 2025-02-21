@@ -46,22 +46,32 @@ const selected_categoryID_value = ref(options_categoryID.value[0].value) // 第1
 
 const items = ref<Item[]>(data)
 
-// 選択変更時に実行する処理
-watch([selected_yyyymm_value, selected_categoryID_value], ([new_yyyymm_value, new_categoryID_value]) => {
-  let query = '?yyyymm=' + new_yyyymm_value
-  if (String(selected_categoryID_value.value) != 'all') {
-    query += '&category_id=' + new_categoryID_value
+const fetchData = async (yyyymm: string, categoryID: string) => {
+  try {
+    let query = `?yyyymm=${yyyymm}`
+    if (categoryID !== 'all') {
+      query += `&category_id=${categoryID}`
+    }
+
+    const data = await $fetch(`/api/getHistories${query}`)
+    items.value = data as Record[]
   }
 
-  const fetchData = useFetch(
-    '/api/getHistories' + query,
-    {
-      key: `/api/getHistories`,
-    },
-  )
-  items.value = fetchData.data.value as Record[]
-}, { immediate: true }) // 初回ロード時に値が undefined になるのを防ぐ
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  catch (error) {
+    // ToDo: error handling
+    // console.error('Error fetching data:', error)
+  }
+}
 
+// 選択変更時に実行する処理
+watch(
+  [selected_yyyymm_value, selected_categoryID_value],
+  ([new_yyyymm_value, new_categoryID_value]) => {
+    fetchData(new_yyyymm_value, new_categoryID_value)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
