@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { Category, Record } from '@/interfaces'
 import type { Header, Item } from 'vue3-easy-data-table'
+const allCategoryText: string = '全カテゴリ'
 
 const headers = ref<Header[]>([
   { text: 'ID', value: 'id' },
@@ -47,9 +48,13 @@ onMounted(async () => {
 
   const asyncCategoryData = await $fetch(`/api/getCategories`)
   options_categoryID.value = asyncCategoryData as Category[]
+  const allCategory: Category = {
+    category_id: 0,
+    category_name: allCategoryText,
+  }
+  options_categoryID.value.unshift(allCategory) // 全カテゴリをカテゴリの先頭に追加
   if (options_categoryID.value.length > 0) {
     await nextTick()
-    fetchData(selected_yyyymm_value.value, String(selected_categoryID_value.value))
     selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
   }
 })
@@ -57,8 +62,17 @@ onMounted(async () => {
 const fetchData = async (yyyymm: string, categoryID: string) => {
   try {
     let query = `?yyyymm=${yyyymm}`
-    if (categoryID !== 'all') {
-      query += `&category_id=${categoryID}`
+    // categoryID が null または undefined の場合、'-1' に置き換える
+    const validCategoryID = categoryID ? categoryID : '-1'
+
+    if (validCategoryID !== '-1') {
+      // パラメータが不正なときは何もしない
+      return
+    }
+
+    if (validCategoryID != '0') {
+      // 0 = 全カテゴリ
+      query += `&category_id=${validCategoryID}`
     }
 
     const data = await $fetch(`/api/getHistories${query}`)
