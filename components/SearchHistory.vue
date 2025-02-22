@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
-import type { Record } from '@/interfaces'
+import type { Category, Record } from '@/interfaces'
 import type { Header, Item } from 'vue3-easy-data-table'
 
 const headers = ref<Header[]>([
@@ -18,33 +18,41 @@ const options_yyyymm = ref([
   { value: '202412', label: '202412' },
 ])
 
-const options_categoryID = ref([
-  { value: 'all', label: 'all' },
-  { value: '200', label: '200' },
-  { value: '210', label: '210' },
-  { value: '220', label: '220' },
-])
+const options_categoryID = ref<Category[]>([])
 
-const asyncData = await useFetch(
-  '/api/getHistories',
-  {
-    key: `/api/getHistories`,
-  },
-)
-
-const data = asyncData.data.value as Record[]
+const asyncHistoryData = await $fetch(`/api/getHistories`)
+const historyData = asyncHistoryData as Record[]
 
 // fetchデータを整形
-if (data != undefined) { // 取得済の場合のみ
-  for (const d of data) {
+if (historyData != undefined) { // 取得済の場合のみ
+  for (const d of historyData) {
     d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
   }
 }
 
-const selected_yyyymm_value = ref(options_yyyymm.value[0].value) // 第1項目をデフォに
-const selected_categoryID_value = ref(options_categoryID.value[0].value) // 第1項目をデフォに
+const items = ref<Item[]>(historyData)
 
-const items = ref<Item[]>(data)
+const selected_yyyymm_value = ref(options_yyyymm.value[0].value) // 第1項目をデフォに, TODO
+const selected_categoryID_value = ref<string | null>(null) // 実際に選択されている値が入る
+
+onMounted(async () => {
+  const asyncHistoryData = await $fetch(`/api/getHistories`)
+  const historyData = asyncHistoryData as Record[]
+  // fetchデータを整形
+  if (historyData != undefined) { // 取得済の場合のみ
+    for (const d of historyData) {
+      d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+    }
+  }
+
+  const asyncCategoryData = await $fetch(`/api/getCategories`)
+  options_categoryID.value = asyncCategoryData as Category[]
+  if (options_categoryID.value.length > 0) {
+    await nextTick()
+    fetchData(selected_yyyymm_value.value, String(selected_categoryID_value.value))
+    selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
+  }
+})
 
 const fetchData = async (yyyymm: string, categoryID: string) => {
   try {
@@ -68,9 +76,8 @@ const fetchData = async (yyyymm: string, categoryID: string) => {
 watch(
   [selected_yyyymm_value, selected_categoryID_value],
   ([new_yyyymm_value, new_categoryID_value]) => {
-    fetchData(new_yyyymm_value, new_categoryID_value)
+    fetchData(new_yyyymm_value, String(new_categoryID_value))
   },
-  { immediate: true },
 )
 </script>
 
@@ -87,10 +94,10 @@ watch(
         </select>
       </div>
       <div class='col-2 mb-3'>
-        <label for="dropdown">カテゴリID:</label>
+        <label for="dropdown">カテゴリ名:</label>
         <select id="dropdown" v-model="selected_categoryID_value">
-          <option v-for="option in options_categoryID" :key="option.value" :value="option.value">
-            {{ option.label }}
+          <option v-for="option in options_categoryID" :key="option.category_id" :value="option.category_id">
+            {{ option.category_name }}
           </option>
         </select>
       </div>
