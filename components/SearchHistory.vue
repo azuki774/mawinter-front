@@ -63,14 +63,19 @@ onMounted(async () => {
 
 const fetchData = async (yyyymm: string, categoryID: string) => {
   try {
-    let query = `?yyyymm=${yyyymm}`
+    if (yyyymm == null) {
+      // パラメータが不正なときは何もしない
+      return
+    }
 
+    let query = `?yyyymm=${yyyymm}`
     // categoryID が null または undefined の場合、'-1' に置き換える
     const validCategoryID = categoryID ? categoryID : '-1'
     if (validCategoryID == '-1') {
       // パラメータが不正なときは何もしない
       return
     }
+
     if (categoryID != '0') {
       // 0 = 全カテゴリ
       query += `&category_id=${validCategoryID}`
