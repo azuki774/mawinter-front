@@ -24,6 +24,12 @@ if (thisMonth <= 3) {
       </NuxtLink>
     </div>
 
+    <div class='search_link'>
+      <NuxtLink v-bind:to="{name: 'search'}">
+        履歴検索
+      </NuxtLink>
+    </div>
+
     <h2>直近履歴</h2>
     <ShowHistory />
 
@@ -42,4 +48,11 @@ h2 {
   margin-left: auto;
   margin-right: auto;
 }
+
+.search_link {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 </style>

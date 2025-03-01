@@ -6,7 +6,20 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class MockHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == "/v2/record":
+        if self.path.startswith("/v2/record/available"):
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            response = {
+                "fy" : ['2024'],
+                "yyyymm": ['202501', '202412', '202411']
+            }
+            responseBody = json.dumps(response)
+
+            self.wfile.write(responseBody.encode('utf-8'))
+            return
+
+        if self.path.startswith("/v2/record"):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -35,6 +48,7 @@ class MockHandler(BaseHTTPRequestHandler):
             responseBody = json.dumps(response)
 
             self.wfile.write(responseBody.encode('utf-8'))
+            return
 
         if self.path == "/categories":
             self.send_response(200)
