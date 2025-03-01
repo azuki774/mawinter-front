@@ -14,6 +14,11 @@ export interface Category {
   category_name: string
 }
 
+export interface HistoryAvailable {
+  fy: string[]
+  yyyymm: string[]
+}
+
 export interface SummaryOne {
   category_id: number
   category_name: string

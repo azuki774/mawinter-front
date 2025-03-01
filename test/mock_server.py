@@ -10,7 +10,10 @@ class MockHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            response = ['202501', '202412', '202411']
+            response = {
+                "fy" : ['2024'],
+                "yyyymm": ['202501', '202412', '202411']
+            }
             responseBody = json.dumps(response)
 
             self.wfile.write(responseBody.encode('utf-8'))

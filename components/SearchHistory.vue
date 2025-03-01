@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
-import type { Category, Record } from '@/interfaces'
+import type { Category, Record, HistoryAvailable } from '@/interfaces'
 import type { Header, Item } from 'vue3-easy-data-table'
 const allCategoryText: string = '全カテゴリ'
 
@@ -53,8 +53,8 @@ onMounted(async () => {
     selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
   }
 
-  const asyncAvailableData = await $fetch(`/api/getAvailable`)
-  options_yyyymm.value = asyncAvailableData as string[]
+  const asyncAvailableData = await $fetch(`/api/getAvailable`) as HistoryAvailable
+  options_yyyymm.value = asyncAvailableData.yyyymm as string[]
   if (options_yyyymm.value.length > 0) {
     await nextTick()
     selected_yyyymm_value.value = String(options_yyyymm.value[0])
