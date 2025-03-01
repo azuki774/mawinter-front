@@ -13,12 +13,7 @@ const headers = ref<Header[]>([
   { text: 'メモ', value: 'memo' },
 ])
 
-const options_yyyymm = ref([
-  { value: '202502', label: '202502' },
-  { value: '202501', label: '202501' },
-  { value: '202412', label: '202412' },
-])
-
+const options_yyyymm = ref<string[]>()
 const options_categoryID = ref<Category[]>([])
 
 const asyncHistoryData = await $fetch(`/api/getHistories`)
@@ -33,7 +28,7 @@ if (historyData != undefined) { // 取得済の場合のみ
 
 const items = ref<Item[]>(historyData)
 
-const selected_yyyymm_value = ref(options_yyyymm.value[0].value) // 第1項目をデフォに, TODO
+const selected_yyyymm_value = ref<string | null>(null)
 const selected_categoryID_value = ref<string | null>(null) // 実際に選択されている値が入る
 
 onMounted(async () => {
@@ -57,20 +52,26 @@ onMounted(async () => {
     await nextTick()
     selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
   }
+
+  const asyncAvailableData = await $fetch(`/api/getAvailable`)
+  options_yyyymm.value = asyncAvailableData as string[]
+  if (options_yyyymm.value.length > 0) {
+    await nextTick()
+    selected_yyyymm_value.value = String(options_yyyymm.value[0])
+  }
 })
 
 const fetchData = async (yyyymm: string, categoryID: string) => {
   try {
     let query = `?yyyymm=${yyyymm}`
+
     // categoryID が null または undefined の場合、'-1' に置き換える
     const validCategoryID = categoryID ? categoryID : '-1'
-
-    if (validCategoryID !== '-1') {
+    if (validCategoryID == '-1') {
       // パラメータが不正なときは何もしない
       return
     }
-
-    if (validCategoryID != '0') {
+    if (categoryID != '0') {
       // 0 = 全カテゴリ
       query += `&category_id=${validCategoryID}`
     }
@@ -90,7 +91,7 @@ const fetchData = async (yyyymm: string, categoryID: string) => {
 watch(
   [selected_yyyymm_value, selected_categoryID_value],
   ([new_yyyymm_value, new_categoryID_value]) => {
-    fetchData(new_yyyymm_value, String(new_categoryID_value))
+    fetchData(String(new_yyyymm_value), String(new_categoryID_value))
   },
 )
 </script>
@@ -99,16 +100,16 @@ watch(
     <div class='row justify-content-center'>
       <h2>レコード</h2>
 
-      <div class='col-2 mb-3'>
-        <label for="dropdown">取得月:</label>
+      <div class='col-2 mb-2'>
+        <label for="dropdown" class="d-block">取得月:</label>
         <select id="dropdown" v-model="selected_yyyymm_value">
-          <option v-for="option in options_yyyymm" :key="option.value" :value="option.value">
-            {{ option.label }}
+          <option v-for="option in options_yyyymm" :key="option" :value="option">
+            {{ option }}
           </option>
         </select>
       </div>
-      <div class='col-2 mb-3'>
-        <label for="dropdown">カテゴリ名:</label>
+      <div class='col-2 mb-2'>
+        <label for="dropdown" class="d-block">カテゴリ名:</label>
         <select id="dropdown" v-model="selected_categoryID_value">
           <option v-for="option in options_categoryID" :key="option.category_id" :value="option.category_id">
             {{ option.category_name }}
