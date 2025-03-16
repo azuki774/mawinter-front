@@ -1,5 +1,6 @@
 <script setup lang='ts'>
-import type { SummaryOne } from '@/interfaces'
+import type { SummaryOne, HistoryAvailable } from '@/interfaces'
+import { useRoute } from 'vue-router'
 const incomeList = ref<SummaryOne[]>()
 const incomeSumList = ref<SummaryOne>()
 const outgoingList = ref<SummaryOne[]>()
@@ -13,127 +14,151 @@ let fetched: boolean // api fetch 出来ていたら true にする（表示制�
 
 const route = useRoute()
 const year = route.params.year
-const asyncData = await useFetch(
-  '/api/summary' + '?year=' + year, // webサーバ内ではクエリパラメータで渡す
-  {
-    key: `/api/summary`,
-    transform: (data: SummaryOne[]): SummaryOne[][] => {
-      const incomeArray: SummaryOne[] = []
-      const outgoingArray: SummaryOne[] = []
-      const investArray: SummaryOne[] = []
-      for (const d of data) {
-        if ([100, 101, 110].includes(d.category_id)) {
-          incomeArray.push(d)
+
+const fetchSummary = async () => {
+  const asyncData = await useFetch(
+    '/api/summary' + '?year=' + year, // webサーバ内ではクエリパラメータで渡す
+    {
+      key: `/api/summary`,
+      transform: (data: SummaryOne[]): SummaryOne[][] => {
+        const incomeArray: SummaryOne[] = []
+        const outgoingArray: SummaryOne[] = []
+        const investArray: SummaryOne[] = []
+        for (const d of data) {
+          if ([100, 101, 110].includes(d.category_id)) {
+            incomeArray.push(d)
+          }
+          if ([200, 210, 220, 221, 222, 230, 231, 240, 250, 251, 260, 270, 280, 300, 400, 500].includes(d.category_id)) {
+            outgoingArray.push(d)
+          }
+          if ([700, 701].includes(d.category_id)) {
+            investArray.push(d)
+          }
         }
-        if ([200, 210, 220, 221, 222, 230, 231, 240, 250, 251, 260, 270, 280, 300, 400, 500].includes(d.category_id)) {
-          outgoingArray.push(d)
-        }
-        if ([700, 701].includes(d.category_id)) {
-          investArray.push(d)
-        }
-      }
-      const retArray: SummaryOne[][] = [incomeArray, outgoingArray, investArray]
-      return retArray
+        const retArray: SummaryOne[][] = [incomeArray, outgoingArray, investArray]
+        return retArray
+      },
     },
-  },
-)
+  )
 
-if (asyncData.data.value != undefined) {
-  const incomeData = asyncData.data.value[0] as SummaryOne[]
-  const outgoingData = asyncData.data.value[1] as SummaryOne[]
-  const investData = asyncData.data.value[2] as SummaryOne[]
-  incomeList.value = incomeData
-  outgoingList.value = outgoingData
-  investList.value = investData
+  if (asyncData.data.value != undefined) {
+    const incomeData = asyncData.data.value[0] as SummaryOne[]
+    const outgoingData = asyncData.data.value[1] as SummaryOne[]
+    const investData = asyncData.data.value[2] as SummaryOne[]
+    incomeList.value = incomeData
+    outgoingList.value = outgoingData
+    investList.value = investData
 
-  // sum の計算(income)
-  const incomeSumData: SummaryOne = {
-    category_id: 999,
-    category_name: '収入合計',
-    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    total: 0,
-  }
-
-  for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0
-    let totalsum: number = 0
-    for (const d of incomeData) {
-      sum += d.price[i]
-      totalsum += d.price[i]
+    // sum の計算(income)
+    const incomeSumData: SummaryOne = {
+      category_id: 999,
+      category_name: '収入合計',
+      price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      total: 0,
     }
-    incomeSumData.price[i] = sum
-    incomeSumData.total += totalsum
-  }
-  incomeSumList.value = incomeSumData
 
-  // sum の計算(outgoing)
-  const outgoingSumData: SummaryOne = {
-    category_id: 999,
-    category_name: '支出合計',
-    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    total: 0,
-  }
-  for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0
-    let totalsum: number = 0
-    for (const d of outgoingData) {
-      sum += d.price[i]
-      totalsum += d.price[i]
+    for (let i: number = 0; i < 12; i++) {
+      let sum: number = 0
+      let totalsum: number = 0
+      for (const d of incomeData) {
+        sum += d.price[i]
+        totalsum += d.price[i]
+      }
+      incomeSumData.price[i] = sum
+      incomeSumData.total += totalsum
     }
-    outgoingSumData.price[i] = sum
-    outgoingSumData.total += totalsum
-  }
-  outgoingSumList.value = outgoingSumData
+    incomeSumList.value = incomeSumData
 
-  // sum の計算(invest)
-  const investSumData: SummaryOne = {
-    category_id: 999,
-    category_name: '投資合計',
-    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    total: 0,
-  }
-
-  for (let i: number = 0; i < 12; i++) {
-    let sum: number = 0
-    let totalsum: number = 0
-    for (const d of investData) {
-      sum += d.price[i]
-      totalsum += d.price[i]
+    // sum の計算(outgoing)
+    const outgoingSumData: SummaryOne = {
+      category_id: 999,
+      category_name: '支出合計',
+      price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      total: 0,
     }
-    investSumData.price[i] = sum
-    investSumData.total += totalsum
-  }
-  investSumList.value = investSumData
+    for (let i: number = 0; i < 12; i++) {
+      let sum: number = 0
+      let totalsum: number = 0
+      for (const d of outgoingData) {
+        sum += d.price[i]
+        totalsum += d.price[i]
+      }
+      outgoingSumData.price[i] = sum
+      outgoingSumData.total += totalsum
+    }
+    outgoingSumList.value = outgoingSumData
 
-  // 合計テーブル用の計算
-  const AllSumData: SummaryOne = {
-    category_id: 999,
-    category_name: '合計',
-    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    total: 0,
-  }
+    // sum の計算(invest)
+    const investSumData: SummaryOne = {
+      category_id: 999,
+      category_name: '投資合計',
+      price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      total: 0,
+    }
 
-  for (let i: number = 0; i < 12; i++) {
-    AllSumData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i] - investSumData.price[i]
-  }
-  AllSumData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
-  AllSumList.value = AllSumData
+    for (let i: number = 0; i < 12; i++) {
+      let sum: number = 0
+      let totalsum: number = 0
+      for (const d of investData) {
+        sum += d.price[i]
+        totalsum += d.price[i]
+      }
+      investSumData.price[i] = sum
+      investSumData.total += totalsum
+    }
+    investSumList.value = investSumData
 
-  const AllSumWithoutInvestData: SummaryOne = {
-    category_id: 999,
-    category_name: '合計（投資除く）',
-    price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    total: 0,
-  }
+    // 合計テーブル用の計算
+    const AllSumData: SummaryOne = {
+      category_id: 999,
+      category_name: '合計',
+      price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      total: 0,
+    }
 
-  for (let i: number = 0; i < 12; i++) {
-    AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i]
-  }
-  AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
-  AllSumWithoutInvestList.value = AllSumWithoutInvestData
+    for (let i: number = 0; i < 12; i++) {
+      AllSumData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i] - investSumData.price[i]
+    }
+    AllSumData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
+    AllSumList.value = AllSumData
 
-  fetched = true // データ取得後のフラグを立てる
+    const AllSumWithoutInvestData: SummaryOne = {
+      category_id: 999,
+      category_name: '合計（投資除く）',
+      price: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      total: 0,
+    }
+
+    for (let i: number = 0; i < 12; i++) {
+      AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i]
+    }
+    AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
+    AllSumWithoutInvestList.value = AllSumWithoutInvestData
+
+    fetched = true // データ取得後のフラグを立てる
+  }
 }
+
+const options_fy = ref<string[]>()
+const selected_fy_value = ref<string | null>(null)
+
+onMounted(async () => {
+  const asyncAvailableData = await $fetch(`/api/getAvailable`) as HistoryAvailable
+  options_fy.value = asyncAvailableData.fy as string[]
+  if (options_fy.value.length > 0) {
+    await nextTick()
+    selected_fy_value.value = String(year)
+  }
+  fetchSummary()
+})
+
+// 選択変更時に実行する処理
+watch(selected_fy_value, (newValue, oldValue) => {
+  if (oldValue != null) {
+    window.location.href = `../summary/${newValue}`
+  }
+},
+)
 
 </script>
 
@@ -141,6 +166,15 @@ if (asyncData.data.value != undefined) {
   <div class='container'>
   <h1>サマリー表示</h1>
     <a href='../'>トップに戻る</a>
+
+    <div class='col-2 mb-2'>
+        <label for="dropdown" class="d-block">取得年度:</label>
+        <select id="dropdown" v-model="selected_fy_value">
+          <option v-for="option in options_fy" :key="option" :value="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
 
     <h2>合計</h2>
     <table class='table small bordered striped table-bordered'>
