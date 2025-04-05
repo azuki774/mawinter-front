@@ -132,7 +132,7 @@ const fetchSummary = async () => {
     for (let i: number = 0; i < 12; i++) {
       AllSumWithoutInvestData.price[i] = incomeSumData.price[i] - outgoingSumData.price[i]
     }
-    AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total - investSumData.total
+    AllSumWithoutInvestData.total = incomeSumData.total - outgoingSumData.total
     AllSumWithoutInvestList.value = AllSumWithoutInvestData
 
     fetched = true // データ取得後のフラグを立てる
@@ -162,7 +162,7 @@ watch(selected_fy_value, (newValue, oldValue) => {
 
 </script>
 
-<template>
+<template>合計
   <div class='container'>
   <h1>サマリー表示</h1>
     <a href='../'>トップに戻る</a>
