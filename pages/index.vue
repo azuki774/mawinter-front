@@ -6,7 +6,6 @@ const thisMonth = today.getMonth()
 // year -> FY変換: 1月から3月なら年を1減らす.. 2025/03 -> FY2024
 let thisFY = thisYear
 if (thisMonth <= 3) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   thisFY -= 1
 }
 
@@ -19,19 +18,14 @@ if (thisMonth <= 3) {
     <PostRecord />
 
     <div class='summary_link'>
-      <NuxtLink v-bind:to="{name: 'summary-year', params: {year: thisFY}}">
+      <NuxtLink :to="{name: 'summary-year', params: {year: thisFY}}">
         サマリー表示
       </NuxtLink>
     </div>
 
-    <div class='search_link'>
-      <NuxtLink v-bind:to="{name: 'search'}">
-        履歴検索
-      </NuxtLink>
+    <div class="container-sm">
+      <SearchHistory />
     </div>
-
-    <h2>直近履歴</h2>
-    <ShowHistory />
 
   </section>
 </template>
