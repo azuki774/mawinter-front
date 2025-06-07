@@ -1,7 +1,7 @@
 {
 	"name": "Nuxt 3 (npm / Node.js 22)",
 	// Node.js v22 対応のDebianベースイメージを指定
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-from-docker:1": {}
 	},
