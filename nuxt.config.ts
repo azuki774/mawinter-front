@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: { // 外部から取得するにはpublic が必要
-      mawinterApi: 'http://mawinter-api', // .env の NUXT_PUBLIC_API_BASE_ENDPOINT から取得
+      mawinterApi: 'http://mawinter-api', // .env の NUXT_PUBLIC_MAWINTER_API から取得 (Nuxtが自動的にマッピング)
     },
   },
   modules: [
