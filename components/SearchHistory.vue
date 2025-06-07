@@ -11,6 +11,7 @@ const headers = ref<Header[]>([
   { text: '登録元', value: 'from' },
   { text: '金額', value: 'price', sortable: true },
   { text: 'メモ', value: 'memo' },
+  { text: '操作', value: 'actions' },
 ])
 
 const options_yyyymm = ref<string[]>()
@@ -30,6 +31,26 @@ const items = ref<Item[]>(historyData)
 
 const selected_yyyymm_value = ref<string | null>(null)
 const selected_categoryID_value = ref<string | null>(null) // 実際に選択されている値が入る
+
+const deleteItem = async (itemId: number | string) => {
+  // ユーザーに削除の確認を求める
+  if (!confirm('このレコードを削除してもよろしいですか？')) {
+    return
+  }
+
+  await useAsyncData(
+    `record`,
+    (): Promise<unknown> => {
+      const param = { id: itemId }
+      const paramStr = '?id=' + param['id']
+      const localurl = '/api/deleteRecord' + paramStr
+      const response = $fetch(localurl)
+      return response
+    },
+  )
+
+  location.reload()
+}
 
 onMounted(async () => {
   const asyncHistoryData = await $fetch(`/api/getHistories`)
@@ -122,6 +143,10 @@ watch(
         </select>
       </div>
 
-      <EasyDataTable :headers="headers" :items="items" />
+      <EasyDataTable :headers="headers" :items="items">
+        <template #item-actions="item">
+          <button class="btn btn-danger btn-sm" @click="deleteItem(item.id)">削除</button>
+        </template>
+      </EasyDataTable>
     </div>
 </template>
