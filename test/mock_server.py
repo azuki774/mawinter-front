@@ -19,7 +19,7 @@ class MockHandler(BaseHTTPRequestHandler):
             self.wfile.write(responseBody.encode('utf-8'))
             return
 
-        if self.path == "/v2/record/summary/2024":
+        if self.path == "/v2/record/summary/2025":
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -29,7 +29,7 @@ class MockHandler(BaseHTTPRequestHandler):
             self.wfile.write(responseBody.encode('utf-8'))
             return
 
-        if self.path == "/v2/record/summary/2023":
+        if self.path == "/v2/record/summary/2024":
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
