@@ -162,8 +162,8 @@ watch(selected_fy_value, (newValue, oldValue) => {
 
 </script>
 
-<template>合計
-  <div class='container'>
+<template>
+  <div>
   <h1>サマリー表示</h1>
     <a href='../'>トップに戻る</a>
 
@@ -174,7 +174,7 @@ watch(selected_fy_value, (newValue, oldValue) => {
             {{ option }}
           </option>
         </select>
-      </div>
+    </div>
 
     <h2>合計</h2>
     <table class='table small bordered striped table-bordered'>
