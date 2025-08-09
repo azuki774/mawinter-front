@@ -125,7 +125,6 @@ const monthlyExpenseData = computed(() => {
     pointRadius: 3,
     pointBorderWidth: 1,
     data: monthlyIncomeTotal,
-    yAxisID: 'y1', // 右側のY軸を使用
   }
 
   return {
@@ -184,20 +183,7 @@ const chartOptions = {
       beginAtZero: true,
       title: {
         display: true,
-        text: '支出額 (円)',
-      },
-    },
-    y1: {
-      type: 'linear',
-      display: true,
-      position: 'right',
-      beginAtZero: true,
-      title: {
-        display: true,
-        text: '収入額 (円)',
-      },
-      grid: {
-        drawOnChartArea: false, // 右軸のグリッド線を非表示
+        text: '金額 (円)',
       },
     },
   },
