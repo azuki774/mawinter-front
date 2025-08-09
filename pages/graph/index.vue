@@ -97,7 +97,7 @@ const monthlyExpenseData = computed(() => {
 
     return {
       label: item.category_name,
-      type: 'bar',
+      type: 'bar' as const,
       backgroundColor: color,
       borderColor: color,
       borderWidth: 1,
@@ -116,7 +116,7 @@ const monthlyExpenseData = computed(() => {
   // 収入の折れ線データセットを作成
   const incomeDataset = {
     label: '収入合計',
-    type: 'line',
+    type: 'line' as const,
     borderColor: '#28a745',
     backgroundColor: 'transparent',
     borderWidth: 2,
@@ -125,7 +125,6 @@ const monthlyExpenseData = computed(() => {
     pointRadius: 3,
     pointBorderWidth: 1,
     data: monthlyIncomeTotal,
-    yAxisID: 'y1', // 右側のY軸を使用
   }
 
   return {
@@ -177,27 +176,14 @@ const chartOptions = {
       stacked: true,
     },
     y: {
-      type: 'linear',
+      type: 'linear' as const,
       display: true,
-      position: 'left',
+      position: 'left' as const,
       stacked: true,
       beginAtZero: true,
       title: {
         display: true,
-        text: '支出額 (円)',
-      },
-    },
-    y1: {
-      type: 'linear',
-      display: true,
-      position: 'right',
-      beginAtZero: true,
-      title: {
-        display: true,
-        text: '収入額 (円)',
-      },
-      grid: {
-        drawOnChartArea: false, // 右軸のグリッド線を非表示
+        text: '金額 (円)',
       },
     },
   },
