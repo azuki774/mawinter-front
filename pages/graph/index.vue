@@ -97,7 +97,7 @@ const monthlyExpenseData = computed(() => {
 
     return {
       label: item.category_name,
-      type: 'bar',
+      type: 'bar' as const,
       backgroundColor: color,
       borderColor: color,
       borderWidth: 1,
@@ -116,7 +116,7 @@ const monthlyExpenseData = computed(() => {
   // 収入の折れ線データセットを作成
   const incomeDataset = {
     label: '収入合計',
-    type: 'line',
+    type: 'line' as const,
     borderColor: '#28a745',
     backgroundColor: 'transparent',
     borderWidth: 2,
@@ -176,9 +176,9 @@ const chartOptions = {
       stacked: true,
     },
     y: {
-      type: 'linear',
+      type: 'linear' as const,
       display: true,
-      position: 'left',
+      position: 'left' as const,
       stacked: true,
       beginAtZero: true,
       title: {
