@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   routeRules: {
     '/': { ssr: false },
+    '/graph/**': { ssr: false },
   },
   runtimeConfig: {
     public: { // 外部から取得するにはpublic が必要
