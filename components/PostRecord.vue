@@ -56,12 +56,12 @@ const postButton = async (): Promise<void> => {
       </div>
 
       <div class='col-2 mb-3'>
-        <input v-model='priceBox' type='number' placeholder='Value' />
+        <input v-model='priceBox' type='number' placeholder='Value' >
       </div>
     </div>
 
     <div class='d-grid col-2 mx-auto'>
-      <button class='btn btn-primary' @click='postButton' name='postButton' type='submit'>Post</button>
+      <button class='btn btn-primary' name='postButton' type='submit' @click='postButton'>Post</button>
     </div>
 
   </div>

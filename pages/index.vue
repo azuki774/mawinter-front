@@ -1,13 +1,4 @@
 <script setup lang='ts'>
-const today = new Date()
-const thisYear = today.getFullYear()
-const thisMonth = today.getMonth()
-
-// year -> FY変換: 1月から3月なら年を1減らす.. 2025/03 -> FY2024
-let thisFY = thisYear
-if (thisMonth <= 3) {
-  thisFY -= 1
-}
 
 </script>
 
@@ -17,9 +8,9 @@ if (thisMonth <= 3) {
     <h2>登録</h2>
     <PostRecord />
 
-    <div class='summary_link'>
-      <NuxtLink :to="{name: 'summary-year', params: {year: thisFY}}">
-        サマリー表示
+    <div class='graph_link'>
+      <NuxtLink to="/graph">
+        グラフ表示
       </NuxtLink>
     </div>
 
@@ -37,7 +28,7 @@ h2 {
   margin-right: auto;
 }
 
-.summary_link {
+.graph_link {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
