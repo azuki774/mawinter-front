@@ -9,8 +9,10 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  LineController,
+  BarController,
 } from 'chart.js'
-import { Bar } from 'vue-chartjs'
+import { Chart } from 'vue-chartjs'
 import type { SummaryOne } from '@/interfaces'
 
 ChartJS.register(
@@ -19,6 +21,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  LineController,
+  BarController,
   Title,
   Tooltip,
   Legend,
@@ -72,7 +76,7 @@ const fetchSummaryData = async () => {
   }
 }
 
-// 月次支出推移データを生成（カテゴリ別累積グラフ）
+// 月次支出推移データを生成（支出の棒グラフ + 収入の折れ線）
 const monthlyExpenseData = computed(() => {
   if (!summaryData.value.length) return { labels: [], datasets: [] }
 
@@ -81,13 +85,19 @@ const monthlyExpenseData = computed(() => {
     item.category_id >= 200 && item.category_id <= 500,
   )
 
-  // カテゴリごとのデータセットを作成
-  const datasets = expenseData.map((item, index) => {
+  // 収入カテゴリのみフィルタ（100番台）
+  const incomeData = summaryData.value.filter(item =>
+    item.category_id >= 100 && item.category_id <= 199,
+  )
+
+  // 支出カテゴリごとの棒グラフデータセットを作成
+  const expenseDatasets = expenseData.map((item, index) => {
     const hue = (index * 360) / expenseData.length
     const color = `hsla(${hue}, 70%, 60%, 0.8)`
 
     return {
       label: item.category_name,
+      type: 'bar',
       backgroundColor: color,
       borderColor: color,
       borderWidth: 1,
@@ -95,9 +105,32 @@ const monthlyExpenseData = computed(() => {
     }
   })
 
+  // 収入の合計を月別に計算
+  const monthlyIncomeTotal = Array(12).fill(0)
+  incomeData.forEach((item) => {
+    item.price.forEach((price, index) => {
+      monthlyIncomeTotal[index] += Math.abs(price) // 収入も絶対値で表示
+    })
+  })
+
+  // 収入の折れ線データセットを作成
+  const incomeDataset = {
+    label: '収入合計',
+    type: 'line',
+    borderColor: '#28a745',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    pointBackgroundColor: '#28a745',
+    pointBorderColor: '#28a745',
+    pointRadius: 3,
+    pointBorderWidth: 1,
+    data: monthlyIncomeTotal,
+    yAxisID: 'y1', // 右側のY軸を使用
+  }
+
   return {
     labels: ['4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月'],
-    datasets,
+    datasets: [...expenseDatasets, incomeDataset],
   }
 })
 
@@ -144,8 +177,28 @@ const chartOptions = {
       stacked: true,
     },
     y: {
+      type: 'linear',
+      display: true,
+      position: 'left',
       stacked: true,
       beginAtZero: true,
+      title: {
+        display: true,
+        text: '支出額 (円)',
+      },
+    },
+    y1: {
+      type: 'linear',
+      display: true,
+      position: 'right',
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: '収入額 (円)',
+      },
+      grid: {
+        drawOnChartArea: false, // 右軸のグリッド線を非表示
+      },
     },
   },
 }
@@ -215,7 +268,7 @@ watch(selectedYear, () => {
           <h2>月次支出推移 ({{ selectedYear }}年度)</h2>
           <div style="height: 400px">
             <ClientOnly>
-              <Bar :data="monthlyExpenseData" :options="chartOptions" />
+              <Chart type="bar" :data="monthlyExpenseData" :options="chartOptions" />
             </ClientOnly>
           </div>
         </div>
@@ -224,7 +277,7 @@ watch(selectedYear, () => {
           <h2>カテゴリ別支出 ({{ selectedYear }}年度)</h2>
           <div style="height: 400px">
             <ClientOnly>
-              <Bar :data="categoryExpenseData" :options="categoryChartOptions" />
+              <Chart type="bar" :data="categoryExpenseData" :options="categoryChartOptions" />
             </ClientOnly>
           </div>
         </div>
