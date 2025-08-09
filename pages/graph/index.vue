@@ -9,8 +9,10 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  LineController,
+  BarController,
 } from 'chart.js'
-import { Bar } from 'vue-chartjs'
+import { Chart } from 'vue-chartjs'
 import type { SummaryOne } from '@/interfaces'
 
 ChartJS.register(
@@ -19,6 +21,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  LineController,
+  BarController,
   Title,
   Tooltip,
   Legend,
@@ -264,7 +268,7 @@ watch(selectedYear, () => {
           <h2>月次支出推移 ({{ selectedYear }}年度)</h2>
           <div style="height: 400px">
             <ClientOnly>
-              <Bar :data="monthlyExpenseData" :options="chartOptions" />
+              <Chart type="bar" :data="monthlyExpenseData" :options="chartOptions" />
             </ClientOnly>
           </div>
         </div>
@@ -273,7 +277,7 @@ watch(selectedYear, () => {
           <h2>カテゴリ別支出 ({{ selectedYear }}年度)</h2>
           <div style="height: 400px">
             <ClientOnly>
-              <Bar :data="categoryExpenseData" :options="categoryChartOptions" />
+              <Chart type="bar" :data="categoryExpenseData" :options="categoryChartOptions" />
             </ClientOnly>
           </div>
         </div>
