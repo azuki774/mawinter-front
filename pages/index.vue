@@ -12,7 +12,8 @@ onMounted(async () => {
       // 最新の年度（配列の最後）を取得
       latestYear.value = availableYears.value[availableYears.value.length - 1]
     }
-  } catch (error) {
+  }
+  catch {
     // エラー時は現在の年度を使用
     const currentYear = new Date().getFullYear()
     latestYear.value = String(currentYear)
