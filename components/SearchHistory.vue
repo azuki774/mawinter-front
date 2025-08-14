@@ -17,17 +17,8 @@ const headers = ref<Header[]>([
 const options_yyyymm = ref<string[]>()
 const options_categoryID = ref<Category[]>([])
 
-const asyncHistoryData = await $fetch(`/api/getHistories`)
-const historyData = asyncHistoryData as Record[]
-
-// fetchデータを整形
-if (historyData != undefined) { // 取得済の場合のみ
-  for (const d of historyData) {
-    d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
-  }
-}
-
-const items = ref<Item[]>(historyData)
+// 初期は空配列、onMountedで適切なデータを取得
+const items = ref<Item[]>([])
 
 const selected_yyyymm_value = ref<string | null>(null)
 const selected_categoryID_value = ref<string | null>(null) // 実際に選択されている値が入る
@@ -53,15 +44,7 @@ const deleteItem = async (itemId: number | string) => {
 }
 
 onMounted(async () => {
-  const asyncHistoryData = await $fetch(`/api/getHistories`)
-  const historyData = asyncHistoryData as Record[]
-  // fetchデータを整形
-  if (historyData != undefined) { // 取得済の場合のみ
-    for (const d of historyData) {
-      d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
-    }
-  }
-
+  // カテゴリデータを取得
   const asyncCategoryData = await $fetch(`/api/getCategories`)
   options_categoryID.value = asyncCategoryData as Category[]
   const allCategory: Category = {
@@ -69,16 +52,19 @@ onMounted(async () => {
     category_name: allCategoryText,
   }
   options_categoryID.value.unshift(allCategory) // 全カテゴリをカテゴリの先頭に追加
-  if (options_categoryID.value.length > 0) {
-    await nextTick()
-    selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
-  }
 
+  // 利用可能な年月データを取得
   const asyncAvailableData = await $fetch(`/api/getAvailable`) as HistoryAvailable
   options_yyyymm.value = asyncAvailableData.yyyymm as string[]
-  if (options_yyyymm.value.length > 0) {
+
+  // 初期値を設定
+  if (options_yyyymm.value.length > 0 && options_categoryID.value.length > 0) {
     await nextTick()
     selected_yyyymm_value.value = String(options_yyyymm.value[0])
+    selected_categoryID_value.value = String(options_categoryID.value[0].category_id)
+
+    // 初期データを取得
+    await fetchData(selected_yyyymm_value.value, selected_categoryID_value.value)
   }
 })
 
@@ -103,7 +89,16 @@ const fetchData = async (yyyymm: string, categoryID: string) => {
     }
 
     const data = await $fetch(`/api/getHistories${query}`)
-    items.value = data as Record[]
+    const historyData = data as Record[]
+
+    // fetchデータを整形
+    if (historyData != undefined) { // 取得済の場合のみ
+      for (const d of historyData) {
+        d.datetime = d.datetime.slice(0, 19) // 2023-09-23T00:00:00+09:00 -> 2023-09-23T00:00:00
+      }
+    }
+
+    items.value = historyData
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -113,11 +108,13 @@ const fetchData = async (yyyymm: string, categoryID: string) => {
   }
 }
 
-// 選択変更時に実行する処理
+// 選択変更時に実行する処理（初期値がnullの場合は実行しない）
 watch(
   [selected_yyyymm_value, selected_categoryID_value],
   ([new_yyyymm_value, new_categoryID_value]) => {
-    fetchData(String(new_yyyymm_value), String(new_categoryID_value))
+    if (new_yyyymm_value && new_categoryID_value !== null) {
+      fetchData(String(new_yyyymm_value), String(new_categoryID_value))
+    }
   },
 )
 </script>

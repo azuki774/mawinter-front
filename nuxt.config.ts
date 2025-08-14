@@ -3,9 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   css: ['bootstrap/dist/css/bootstrap.min.css'],
   devtools: { enabled: true },
-  routeRules: {
-    '/': { ssr: false },
-    '/graph/**': { ssr: false },
+  app: {
+    head: {
+      link: [
+        { rel: 'dns-prefetch', href: process.env.NUXT_PUBLIC_MAWINTER_API || 'http://mawinter-api' },
+      ],
+    },
   },
   runtimeConfig: {
     public: { // 外部から取得するにはpublic が必要

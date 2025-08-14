@@ -4,17 +4,19 @@ import type { HistoryAvailable } from '@/interfaces'
 const availableYears = ref<string[]>([])
 const latestYear = ref<string>()
 
-onMounted(async () => {
-  try {
-    const availableData = await $fetch<HistoryAvailable>('/api/getAvailable')
-    availableYears.value = availableData.fy || []
+// 非ブロッキングでデータを取得（SSR対応）
+const { data: availableData, pending } = await useFetch<HistoryAvailable>('/api/getAvailable')
+
+// データが取得できたらセット
+watchEffect(() => {
+  if (availableData.value) {
+    availableYears.value = availableData.value.fy || []
     if (availableYears.value.length > 0) {
-      // 最新の年度（配列の最後）を取得
       latestYear.value = availableYears.value[availableYears.value.length - 1]
     }
   }
-  catch {
-    // エラー時は現在の年度を使用
+  else if (!pending.value) {
+    // データ取得失敗時のフォールバック
     const currentYear = new Date().getFullYear()
     latestYear.value = String(currentYear)
   }
