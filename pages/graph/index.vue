@@ -204,7 +204,7 @@ const categoryChartOptions = {
   },
 }
 
-// 初期データ取得
+// 非ブロッキングでデータを取得
 onMounted(async () => {
   await fetchAvailableYears()
   await fetchSummaryData()
