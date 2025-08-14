@@ -14,7 +14,8 @@ watchEffect(() => {
     if (availableYears.value.length > 0) {
       latestYear.value = availableYears.value[availableYears.value.length - 1]
     }
-  } else if (!pending.value) {
+  }
+  else if (!pending.value) {
     // データ取得失敗時のフォールバック
     const currentYear = new Date().getFullYear()
     latestYear.value = String(currentYear)
