@@ -204,9 +204,11 @@ const categoryChartOptions = {
   },
 }
 
-// SSR対応：初期データを setup 内で取得
-await fetchAvailableYears()
-await fetchSummaryData()
+// 非ブロッキングでデータを取得
+onMounted(async () => {
+  await fetchAvailableYears()
+  await fetchSummaryData()
+})
 
 // 年度変更時にデータを再取得
 watch(selectedYear, () => {

@@ -4,18 +4,22 @@ import type { HistoryAvailable } from '@/interfaces'
 const availableYears = ref<string[]>([])
 const latestYear = ref<string>()
 
-// SSR対応：サーバーサイドでもデータを取得
-try {
-  const availableData = await $fetch<HistoryAvailable>('/api/getAvailable')
-  availableYears.value = availableData.fy || []
-  if (availableYears.value.length > 0) {
-    latestYear.value = availableYears.value[availableYears.value.length - 1]
+// 非ブロッキングでデータを取得（SSR対応）
+const { data: availableData, pending } = await useFetch<HistoryAvailable>('/api/getAvailable')
+
+// データが取得できたらセット
+watchEffect(() => {
+  if (availableData.value) {
+    availableYears.value = availableData.value.fy || []
+    if (availableYears.value.length > 0) {
+      latestYear.value = availableYears.value[availableYears.value.length - 1]
+    }
+  } else if (!pending.value) {
+    // データ取得失敗時のフォールバック
+    const currentYear = new Date().getFullYear()
+    latestYear.value = String(currentYear)
   }
-}
-catch {
-  const currentYear = new Date().getFullYear()
-  latestYear.value = String(currentYear)
-}
+})
 </script>
 
 <template>
